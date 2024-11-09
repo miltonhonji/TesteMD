@@ -8,6 +8,7 @@ using DeMaria.BLL.Contracts;
 using DeMaria.DTO;
 using DeMaria.DAL;
 using Npgsql;
+using System.Data;
 
 namespace DeMaria.BLL
 {
@@ -104,7 +105,7 @@ namespace DeMaria.BLL
                 {
                     linhaSql = "SELECT ";
                     linhaSql += "Id_Cliente, ";
-                    linhaSql += "Nome , ";
+                    linhaSql += "Nome, ";
                     linhaSql += "Rua,";
                     linhaSql += "Numero, ";
                     linhaSql += "Complemento, ";
@@ -140,15 +141,83 @@ namespace DeMaria.BLL
                 }
             }
         }
-
+        //Obter os valores 
         public Cliente Obter(int id)
         {
+            DataSet dsCliente = new DataSet();
+            string linhaSql = String.Empty;
+            DTO.Cliente cliente = null;
 
+            using (NpgsqlCommand selectCommand = new NpgsqlCommand())
+            { 
+                try
+                {
+                    linhaSql = "SELECT ";
+                    linhaSql += "Id_Cliente, ";
+                    linhaSql += "Nome, ";
+                    linhaSql += "Rua,";
+                    linhaSql += "Numero, ";
+                    linhaSql += "Complemento, ";
+                    linhaSql += "Bairro, ";
+                    linhaSql += "Cep, ";
+                    linhaSql += "Telefone, ";
+                    linhaSql += "Email  ";
+                    linhaSql += "FROM Cliente ";
+                    linhaSql += "WHERE Id_cliente = @Id_cliente ";
+
+                    selectCommand.Parameters.Add("@Id_cliente", NpgsqlTypes.NpgsqlDbType.Integer, 4, "Id_Cliente").Value = id;
+
+                    factoryConnection.ExecuteQuery(selectCommand, dsCliente, "Cliente");
+
+                    if(dsCliente.Tables["Cliente"].Rows.Count > 0)
+                    {
+                        cliente = new Cliente
+                        {
+                            Id = Convert.ToInt32(dsCliente.Tables["Cliente"].Rows[0]["Id_Cliente"]),
+                            Nome = Convert.ToString(dsCliente.Tables["Cliente"].Rows[0]["Nome"]),
+                            Telefone = Convert.ToString(dsCliente.Tables["Cliente"].Rows[0]["Telefone"]),
+                            Email = Convert.ToString(dsCliente.Tables["Cliente"].Rows[0]["Email"]),
+
+                            Endereco = new Endereco
+                            {
+                                Rua = Convert.ToString(dsCliente.Tables["Cliente"].Rows[0]["Rua"]),
+                                Numero = Convert.ToInt32(dsCliente.Tables["Cliente"].Rows[0]["Numero"]),
+                                Complemento = Convert.ToString(dsCliente.Tables["Cliente"].Rows[0]["Complemento"]),
+                                Bairro = Convert.ToString(dsCliente.Tables["Cliente"].Rows[0]["Bairro"]),
+                                Cep = Convert.ToString(dsCliente.Tables["Cliente"].Rows[0]["Cep"])
+                            }
+                        };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    selectCommand.Dispose();
+                }
+            }
+            return cliente;
         }
-
-        public int Update(Cliente TEntity)
+        //Método para atualizar as informações do cliente
+        public int Update(Cliente cliente)
         {
-            throw new NotImplementedException();
+            string linhaSql = String.Empty;
+            int linhasAfetadas = 0;
+
+            using (NpgsqlCommand updateCommand = new NpgsqlCommand())
+            {
+                try
+                {
+                    linhaSql = "UPDATE Cliente SET ";
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
         }
     }
 }

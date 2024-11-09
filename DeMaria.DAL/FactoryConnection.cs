@@ -167,9 +167,10 @@ namespace DeMaria.DAL
             }
         }
 
-        //Método para o uso do Update
-        public void ExecuteUpdate(NpgsqlCommand sqlCommand, int returnAffectedRows)
+        //Método para o uso do Update, que retornará o número de linhas afetadas
+        public int ExecuteUpdate(NpgsqlCommand sqlCommand)
         {
+            int returnAffectedRows = 0;
             //Abrindo a conexão
             AbrirBancoDeDados();
             //using para a connectionString e o para o dataAdapter
@@ -177,7 +178,10 @@ namespace DeMaria.DAL
             {
                 try
                 {
-                    returnAffectedRows = Convert.ToInt32(sqlCommand.ExecuteNonQuery());
+                    //Executa o comando do Postgresql
+                    returnAffectedRows = sqlCommand.ExecuteNonQuery();
+                    //retorna a linha afetada
+                    return returnAffectedRows;
                 }
                 catch(NpgsqlException nsql)
                 {

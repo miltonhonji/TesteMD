@@ -31,14 +31,44 @@ namespace DeMaria.BLL
         }
         #endregion Construtor
 
-        public int Deletar(Cliente TEntity)
+        public int Deletar(Cliente cliente)
         {
-            throw new NotImplementedException();
+            //int linhasAfetadas = 0;
+            string linhaSql = null;
+
+            using (NpgsqlCommand deleteCommand = new NpgsqlCommand())
+            {
+                try
+                {
+                    //Comando Sql server para deltar
+                    linhaSql = "DELETE FROM Cliente WHERE Id_Cliente = @Id_Cliente";
+                    
+                    deleteCommand.CommandText = linhaSql;
+
+                    //Variáveis
+                    deleteCommand.Parameters.AddWithValue("@Id_Cliente", cliente.Id);
+
+                    return factoryConnection.ExecuteUpdate(deleteCommand);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    deleteCommand.Dispose();
+                }
+            }
+            
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(true);
+            //Tarefa da fila é finalizado para
+            //previnir a finalização do código para este objeto 
+            //executando um segundo tempo.
+            GC.SuppressFinalize(this);
         }
 
         public int Inserir(Cliente cliente)
@@ -92,6 +122,10 @@ namespace DeMaria.BLL
                 {
                     throw new Exception(ex.Message);
                 }
+                finally
+                {
+                    insertCommand.Dispose();
+                }
             }
         }
 
@@ -139,13 +173,17 @@ namespace DeMaria.BLL
                 {
                     throw new Exception(ex.Message);
                 }
+                finally
+                {
+                    selectCommand.Dispose();
+                }
             }
         }
         //Obter os valores 
         public Cliente Obter(int id)
         {
             DataSet dsCliente = new DataSet();
-            string linhaSql = String.Empty;
+            string linhaSql = null;
             DTO.Cliente cliente = null;
 
             using (NpgsqlCommand selectCommand = new NpgsqlCommand())
@@ -163,9 +201,11 @@ namespace DeMaria.BLL
                     linhaSql += "Telefone, ";
                     linhaSql += "Email  ";
                     linhaSql += "FROM Cliente ";
-                    linhaSql += "WHERE Id_cliente = @Id_cliente ";
+                    linhaSql += "WHERE Id_cliente = @Id_Cliente ";
 
-                    selectCommand.Parameters.Add("@Id_cliente", NpgsqlTypes.NpgsqlDbType.Integer, 4, "Id_Cliente").Value = id;
+                    selectCommand.CommandText = linhaSql;
+
+                    selectCommand.Parameters.Add("@Id_Cliente", NpgsqlTypes.NpgsqlDbType.Integer, 4, "Id_Cliente").Value = id;
 
                     factoryConnection.ExecuteQuery(selectCommand, dsCliente, "Cliente");
 
@@ -204,19 +244,65 @@ namespace DeMaria.BLL
         public int Update(Cliente cliente)
         {
             string linhaSql = String.Empty;
-            int linhasAfetadas = 0;
+            //int linhasAfetadas = 0;
 
             using (NpgsqlCommand updateCommand = new NpgsqlCommand())
             {
                 try
                 {
                     linhaSql = "UPDATE Cliente SET ";
-                }
-                catch (Exception)
-                {
+                    linhaSql += "Nome = @Nome, ";
+                    linhaSql += "Rua = @Rua, ";
+                    linhaSql += "Numero = @Numero, ";
+                    linhaSql += "Complemento = @Complemento, ";
+                    linhaSql += "Bairro = @Bairro, ";
+                    linhaSql += "Cep = @Cep, ";
+                    linhaSql += "Telefone = @Telefone, ";
+                    linhaSql += "Email = @Email ";
+                    linhaSql += "Where Id_Cliente = @Id_Cliente ";
 
-                    throw;
+                    updateCommand.CommandText = linhaSql;
+
+                    updateCommand.Parameters.AddWithValue("@Id_Cliente", cliente.Id);
+                    updateCommand.Parameters.AddWithValue("@Nome", cliente.Nome);
+                    updateCommand.Parameters.AddWithValue("@Rua", cliente.Rua);
+                    updateCommand.Parameters.AddWithValue("@Numero", cliente.Numero);
+                    updateCommand.Parameters.AddWithValue("@Complemento", cliente.Complemento);
+                    updateCommand.Parameters.AddWithValue("@Bairro", cliente.Bairro);
+                    updateCommand.Parameters.AddWithValue("@Cep", cliente.Cep);
+                    updateCommand.Parameters.AddWithValue("@Telefone", cliente.Telefone);
+                    updateCommand.Parameters.AddWithValue("@Email", cliente.Email);
+                    //Retorna o número de linhas afetadas
+                    return factoryConnection.ExecuteUpdate(updateCommand);
                 }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    updateCommand.Dispose();
+                }
+            }
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            //Checa se o dispose já foi chamado
+            if(this.disposed)
+            {
+                //Se ok, fecha todos os recursos que não são utilizados
+                if(disposing)
+                {
+                    //Liberando recursos gerenciados
+                    if (component != null)
+                        component.Dispose();
+
+                    //Lança os recursos não gerenciáveis. Se o descarte é falso,
+                    //apenas o seguinte código é executado
+                    handle = IntPtr.Zero;
+                }
+                disposed = true;
             }
         }
     }

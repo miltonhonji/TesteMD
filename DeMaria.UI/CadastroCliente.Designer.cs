@@ -44,11 +44,11 @@
             this.mskTelefone = new System.Windows.Forms.MaskedTextBox();
             this.lblEmail = new System.Windows.Forms.Label();
             this.txtEmail = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.btnAdicionar = new System.Windows.Forms.Button();
-            this.btnAlterar = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnNovo = new System.Windows.Forms.Button();
+            this.btnGravar = new System.Windows.Forms.Button();
+            this.btnSair = new System.Windows.Forms.Button();
             this.dgvListaDeClientes = new System.Windows.Forms.DataGridView();
+            this.btnDeletar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListaDeClientes)).BeginInit();
             this.SuspendLayout();
             // 
@@ -72,14 +72,14 @@
             // 
             this.txtRua.Location = new System.Drawing.Point(43, 85);
             this.txtRua.Name = "txtRua";
-            this.txtRua.Size = new System.Drawing.Size(340, 20);
+            this.txtRua.Size = new System.Drawing.Size(278, 20);
             this.txtRua.TabIndex = 2;
             // 
             // txtNumero
             // 
-            this.txtNumero.Location = new System.Drawing.Point(401, 85);
+            this.txtNumero.Location = new System.Drawing.Point(352, 85);
             this.txtNumero.Name = "txtNumero";
-            this.txtNumero.Size = new System.Drawing.Size(125, 20);
+            this.txtNumero.Size = new System.Drawing.Size(174, 20);
             this.txtNumero.TabIndex = 4;
             // 
             // lblRua
@@ -95,7 +95,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(398, 69);
+            this.label2.Location = new System.Drawing.Point(349, 69);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 5;
@@ -183,47 +183,38 @@
             this.txtEmail.Size = new System.Drawing.Size(358, 20);
             this.txtEmail.TabIndex = 17;
             // 
-            // button1
+            // btnNovo
             // 
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(43, 264);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(93, 50);
-            this.button1.TabIndex = 18;
-            this.button1.Text = "Novo";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnNovo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNovo.Location = new System.Drawing.Point(43, 264);
+            this.btnNovo.Name = "btnNovo";
+            this.btnNovo.Size = new System.Drawing.Size(93, 50);
+            this.btnNovo.TabIndex = 18;
+            this.btnNovo.Text = "Novo";
+            this.btnNovo.UseVisualStyleBackColor = true;
+            this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
             // 
-            // btnAdicionar
+            // btnGravar
             // 
-            this.btnAdicionar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAdicionar.Location = new System.Drawing.Point(168, 264);
-            this.btnAdicionar.Name = "btnAdicionar";
-            this.btnAdicionar.Size = new System.Drawing.Size(97, 50);
-            this.btnAdicionar.TabIndex = 19;
-            this.btnAdicionar.Text = "Adicionar";
-            this.btnAdicionar.UseVisualStyleBackColor = true;
-            this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
+            this.btnGravar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGravar.Location = new System.Drawing.Point(169, 264);
+            this.btnGravar.Name = "btnGravar";
+            this.btnGravar.Size = new System.Drawing.Size(97, 50);
+            this.btnGravar.TabIndex = 19;
+            this.btnGravar.Text = "Gravar";
+            this.btnGravar.UseVisualStyleBackColor = true;
+            this.btnGravar.Click += new System.EventHandler(this.btnGravar_Click);
             // 
-            // btnAlterar
+            // btnSair
             // 
-            this.btnAlterar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAlterar.Location = new System.Drawing.Point(301, 264);
-            this.btnAlterar.Name = "btnAlterar";
-            this.btnAlterar.Size = new System.Drawing.Size(93, 50);
-            this.btnAlterar.TabIndex = 20;
-            this.btnAlterar.Text = "Alterar";
-            this.btnAlterar.UseVisualStyleBackColor = true;
-            this.btnAlterar.Click += new System.EventHandler(this.btnAlterar_Click);
-            // 
-            // button4
-            // 
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Location = new System.Drawing.Point(433, 264);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(93, 50);
-            this.button4.TabIndex = 21;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnSair.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSair.Location = new System.Drawing.Point(433, 264);
+            this.btnSair.Name = "btnSair";
+            this.btnSair.Size = new System.Drawing.Size(93, 50);
+            this.btnSair.TabIndex = 21;
+            this.btnSair.Text = "Sair";
+            this.btnSair.UseVisualStyleBackColor = true;
+            this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
             // 
             // dgvListaDeClientes
             // 
@@ -234,16 +225,27 @@
             this.dgvListaDeClientes.TabIndex = 22;
             this.dgvListaDeClientes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListaDeClientes_CellClick);
             // 
+            // btnDeletar
+            // 
+            this.btnDeletar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeletar.Location = new System.Drawing.Point(296, 264);
+            this.btnDeletar.Name = "btnDeletar";
+            this.btnDeletar.Size = new System.Drawing.Size(97, 50);
+            this.btnDeletar.TabIndex = 23;
+            this.btnDeletar.Text = "Deletar";
+            this.btnDeletar.UseVisualStyleBackColor = true;
+            this.btnDeletar.Click += new System.EventHandler(this.btnDeletar_Click);
+            // 
             // frmCadastroDeCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(813, 472);
+            this.ClientSize = new System.Drawing.Size(853, 472);
+            this.Controls.Add(this.btnDeletar);
             this.Controls.Add(this.dgvListaDeClientes);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.btnAlterar);
-            this.Controls.Add(this.btnAdicionar);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnSair);
+            this.Controls.Add(this.btnGravar);
+            this.Controls.Add(this.btnNovo);
             this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.lblEmail);
             this.Controls.Add(this.lblTelefone);
@@ -287,11 +289,11 @@
         private System.Windows.Forms.MaskedTextBox mskTelefone;
         private System.Windows.Forms.Label lblEmail;
         private System.Windows.Forms.TextBox txtEmail;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button btnAdicionar;
-        private System.Windows.Forms.Button btnAlterar;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnNovo;
+        private System.Windows.Forms.Button btnGravar;
+        private System.Windows.Forms.Button btnSair;
         private System.Windows.Forms.DataGridView dgvListaDeClientes;
+        private System.Windows.Forms.Button btnDeletar;
     }
 }
 

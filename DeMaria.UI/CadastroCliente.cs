@@ -17,6 +17,7 @@ namespace DeMaria.UI
         #region Variáveis
         private int idCliente;
         #endregion Variáveis
+
         public frmCadastroDeCliente()
         {
             InitializeComponent();
@@ -35,9 +36,21 @@ namespace DeMaria.UI
             {
                 List<Cliente> listaDeClientes = clienteRepository.Listar();
 
-                dgvListaDeClientes.DataSource = listaDeClientes;
-                //dgvListaDeClientes.Columns.Clear();
+                dgvListaDeClientes.AutoGenerateColumns = false;
+                //Populando os clientes na datagridview.
+                dgvListaDeClientes.Columns.Clear();
 
+                dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id_Cliente", HeaderText = "Id", Visible = false });
+                dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Nome", HeaderText = "Nome" });
+                dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Rua", HeaderText = "Rua" });
+                dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Numero", HeaderText = "Número" });
+                dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Complemento", HeaderText = "Complemento" });
+                dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Bairro", HeaderText = "Bairro" });
+                dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Cep", HeaderText = "Cep" });
+                dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Telefone", HeaderText = "Telefone" });
+                dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Email", HeaderText = "Email" });
+
+                dgvListaDeClientes.DataSource = listaDeClientes;
             }
             catch (Exception)
             {
@@ -80,14 +93,33 @@ namespace DeMaria.UI
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
 
-        private void dgvListaDeClientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvListaDeClientes_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            //Pegar o valor da linha selecionada
+            var Row = dgvListaDeClientes.CurrentRow;
+            //idCliente recebendo o valor da linha que será populado na lista do datagrid
+            //Lembrando que o idCliente (primeira coluna, está oculta)
+            idCliente = Convert.ToInt32(Row.Cells[0].Value);
 
+            //Após escolher um cliente da lista, quando clicamos em cima do nome, as informações, iráo popular para os campos acima            
+            //Lembrando que está seguindo a ordem do grid.
+            txtNome.Text = Row.Cells[1].Value.ToString();
+            txtRua.Text = Row.Cells[2].Value.ToString();
+            txtNumero.Text = Convert.ToInt32(Row.Cells[3].Value).ToString();
+            txtComplemento.Text = Row.Cells[4].Value.ToString();
+            txtBairro.Text = Row.Cells[5].Value.ToString();
+            mskCep.Text = Row.Cells[6].Value.ToString();
+            mskTelefone.Text = Row.Cells[7].Value.ToString();
+            txtEmail.Text = Row.Cells[8].Value.ToString();
+        }
+
+        private void btnAlterar_Click(object sender, EventArgs e)
+        {
+            dgvListaDeClientes_CellClick(null, null);
         }
     }
 }

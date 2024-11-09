@@ -46,7 +46,7 @@
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.btnAdicionar = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnAlterar = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.dgvListaDeClientes = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListaDeClientes)).BeginInit();
@@ -204,15 +204,16 @@
             this.btnAdicionar.UseVisualStyleBackColor = true;
             this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
             // 
-            // button3
+            // btnAlterar
             // 
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(301, 264);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(93, 50);
-            this.button3.TabIndex = 20;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnAlterar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAlterar.Location = new System.Drawing.Point(301, 264);
+            this.btnAlterar.Name = "btnAlterar";
+            this.btnAlterar.Size = new System.Drawing.Size(93, 50);
+            this.btnAlterar.TabIndex = 20;
+            this.btnAlterar.Text = "Alterar";
+            this.btnAlterar.UseVisualStyleBackColor = true;
+            this.btnAlterar.Click += new System.EventHandler(this.btnAlterar_Click);
             // 
             // button4
             // 
@@ -231,7 +232,7 @@
             this.dgvListaDeClientes.Name = "dgvListaDeClientes";
             this.dgvListaDeClientes.Size = new System.Drawing.Size(483, 131);
             this.dgvListaDeClientes.TabIndex = 22;
-            this.dgvListaDeClientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListaDeClientes_CellContentClick);
+            this.dgvListaDeClientes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListaDeClientes_CellClick);
             // 
             // frmCadastroDeCliente
             // 
@@ -240,7 +241,7 @@
             this.ClientSize = new System.Drawing.Size(813, 472);
             this.Controls.Add(this.dgvListaDeClientes);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btnAlterar);
             this.Controls.Add(this.btnAdicionar);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.txtEmail);
@@ -288,7 +289,7 @@
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnAdicionar;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnAlterar;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.DataGridView dgvListaDeClientes;
     }

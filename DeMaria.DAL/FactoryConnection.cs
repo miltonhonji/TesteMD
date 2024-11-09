@@ -98,6 +98,33 @@ namespace DeMaria.DAL
             }
         }
 
+        //Métodos para Obter os valores
+        public void ExecuteQuery(NpgsqlCommand sqlCommand, DataSet returnDataSet, string nameTableDataSet)
+        {
+            //Abrindo a conexão
+            AbrirBancoDeDados();
+            //using para a connectionString e o para o dataAdapter
+            using (sqlCommand.Connection = conexao)
+            {
+                using (NpgsqlDataAdapter sqlDataAdapter = new NpgsqlDataAdapter(sqlCommand))
+                {
+                    try
+                    {
+                        //Adiciona ou atualiza a linha do Dataset
+                        sqlDataAdapter.Fill(returnDataSet, nameTableDataSet);
+                    }
+                    catch(NpgsqlException nsql)
+                    {
+                        throw new Exception(nsql.Message);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                }
+            }
+        }
+
         //Método para gerar uma lista
         public List<T> ExecuteQueryList<T>(NpgsqlCommand sqlCommand, Func<NpgsqlDataReader, T> mapFunction)
         {
@@ -106,7 +133,7 @@ namespace DeMaria.DAL
             NpgsqlDataReader dataReader;
 
             List<T> list = new List<T>();
-
+            //using para a connectionString e o para o dataAdapter
             using (sqlCommand.Connection = conexao)
             {
                 using (dataReader = sqlCommand.ExecuteReader())
@@ -136,6 +163,34 @@ namespace DeMaria.DAL
                     }
                     //Retorna a lista
                     return list;
+                }
+            }
+        }
+
+        //Método para o uso do Update
+        public void ExecuteUpdate(NpgsqlCommand sqlCommand, int returnAffectedRows)
+        {
+            //Abrindo a conexão
+            AbrirBancoDeDados();
+            //using para a connectionString e o para o dataAdapter
+            using (sqlCommand.Connection = conexao)
+            {
+                try
+                {
+                    returnAffectedRows = Convert.ToInt32(sqlCommand.ExecuteNonQuery());
+                }
+                catch(NpgsqlException nsql)
+                {
+                    throw new Exception(nsql.Message);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    FecharBancoDeDados();
+                    sqlCommand.Dispose();
                 }
             }
         }

@@ -103,7 +103,7 @@ namespace DeMaria.BLL
                 try
                 {
                     linhaSql = "SELECT ";
-                    linhaSql += "id_cliente, ";
+                    linhaSql += "Id_Cliente, ";
                     linhaSql += "Nome , ";
                     linhaSql += "Rua,";
                     linhaSql += "Numero, ";
@@ -119,7 +119,7 @@ namespace DeMaria.BLL
 
                     return factoryConnection.ExecuteQueryList(selectCommand, reader => new Cliente
                     {
-                        Id = Convert.ToInt32(reader["id_cliente"]),
+                        Id = Convert.ToInt32(reader["Id_Cliente"]),
                         Nome = Convert.ToString(reader["Nome"]),
                         Telefone = Convert.ToString(reader["Telefone"]),
                         Email = Convert.ToString(reader["Email"]),
@@ -143,7 +143,7 @@ namespace DeMaria.BLL
 
         public Cliente Obter(int id)
         {
-            throw new NotImplementedException();
+
         }
 
         public int Update(Cliente TEntity)

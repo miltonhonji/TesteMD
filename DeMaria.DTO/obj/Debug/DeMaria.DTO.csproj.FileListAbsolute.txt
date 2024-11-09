@@ -1,6 +1,5 @@
-C:\DevMilton\DeMaria\DeMaria.DTO\bin\Debug\DeMaria.DTO.dll
-C:\DevMilton\DeMaria\DeMaria.DTO\bin\Debug\DeMaria.DTO.pdb
-C:\DevMilton\DeMaria\DeMaria.DTO\obj\Debug\DeMaria.DTO.csprojAssemblyReference.cache
-C:\DevMilton\DeMaria\DeMaria.DTO\obj\Debug\DeMaria.DTO.csproj.CoreCompileInputs.cache
-C:\DevMilton\DeMaria\DeMaria.DTO\obj\Debug\DeMaria.DTO.dll
-C:\DevMilton\DeMaria\DeMaria.DTO\obj\Debug\DeMaria.DTO.pdb
+C:\DevMilton\TesteMD\DeMaria.DTO\bin\Debug\DeMaria.DTO.dll
+C:\DevMilton\TesteMD\DeMaria.DTO\bin\Debug\DeMaria.DTO.pdb
+C:\DevMilton\TesteMD\DeMaria.DTO\obj\Debug\DeMaria.DTO.csproj.CoreCompileInputs.cache
+C:\DevMilton\TesteMD\DeMaria.DTO\obj\Debug\DeMaria.DTO.dll
+C:\DevMilton\TesteMD\DeMaria.DTO\obj\Debug\DeMaria.DTO.pdb

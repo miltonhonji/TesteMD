@@ -49,3 +49,4 @@ C:\DevMilton\TesteMD\DeMaria.UI\obj\Debug\DeMaria.UI.csproj.CoreCompileInputs.ca
 C:\DevMilton\TesteMD\DeMaria.UI\obj\Debug\DeMaria.UI.csproj.CopyComplete
 C:\DevMilton\TesteMD\DeMaria.UI\obj\Debug\DeMaria.UI.exe
 C:\DevMilton\TesteMD\DeMaria.UI\obj\Debug\DeMaria.UI.pdb
+C:\DevMilton\TesteMD\DeMaria.UI\obj\Debug\DeMaria.UI.frmCadastroDeProdutos.resources

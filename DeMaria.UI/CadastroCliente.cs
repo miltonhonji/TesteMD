@@ -30,16 +30,21 @@ namespace DeMaria.UI
 
         private void CarregarClienteParaODataGridView()
         {
+            //Instancia da classe
             ClienteRepository clienteRepository = new ClienteRepository();
 
             try
             {
+                //Utilizando listas, que eu montei na classe ClienteRepository.
                 List<Cliente> listaDeClientes = clienteRepository.Listar();
 
+                //A coluna não é gerada automaticamente.
                 dgvListaDeClientes.AutoGenerateColumns = false;
                 //Populando os clientes na datagridview.
                 dgvListaDeClientes.Columns.Clear();
 
+                //Montando a ordem das colunas para o datagrid
+                //Lembrando que a coluna a Id não está  visível.
                 dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id", HeaderText = "Id", Visible = false });
                 dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Nome", HeaderText = "Nome" });
                 dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Rua", HeaderText = "Rua" });
@@ -50,12 +55,12 @@ namespace DeMaria.UI
                 dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Telefone", HeaderText = "Telefone" });
                 dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Email", HeaderText = "Email" });
 
+                //O DataSource recebendo a lista de Clientes.
                 dgvListaDeClientes.DataSource = listaDeClientes;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
 

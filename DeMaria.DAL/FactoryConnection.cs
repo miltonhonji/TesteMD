@@ -39,12 +39,12 @@ namespace DeMaria.DAL
 
         FactoryConnection()
         {
-            if(System.Net.Dns.GetHostName().Equals("Seu-pc"))
+            if(System.Net.Dns.GetHostName().Equals("DESKTOP-IQ178NE"))
             {
                 Server = "localhost";
                 Port = 5432;
                 Database = "testesdb";
-                User = "postgres";
+                User = "***";
                 Password = "****";
             }
         }

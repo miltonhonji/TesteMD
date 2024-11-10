@@ -233,10 +233,6 @@ namespace DeMaria.BLL
                 {
                     throw new Exception(ex.Message);
                 }
-                finally
-                {
-                    selectCommand.Dispose();
-                }
             }
             return cliente;
         }

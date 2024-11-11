@@ -20,40 +20,36 @@ namespace DeMaria.UI
 
         public frmCadastroDeProdutos()
         {
+
+        }
+
+        public frmCadastroDeProdutos(int produtoId)
+        {
             InitializeComponent();
+            idProduto = produtoId;
+            CarregarDados();
         }
 
-        private void frmCadastroDeProdutos_Load(object sender, EventArgs e)
-        {
-            CarregarProdutos();
-        }
 
-        private void CarregarProdutos()
+        private void CarregarDados()
         {
-            //Instância da classe produtoRepository
+            //Instanciar as classes do repositório do BLL.Produto e do DTO.Produto.
             ProdutoRepository produtoRepository = new ProdutoRepository();
+            Produto produto = produtoRepository.Obter(idProduto);
 
             try
             {
-                //Lista de Produtos para o datagrid
-                List<Produto> listaProdutos = produtoRepository.Listar();
-
-                //gerar a coluna manual
-                dgvListaDeProdutos.AutoGenerateColumns = false;
-
-                //Limpando as colunas para receber os novos campos
-                dgvListaDeProdutos.Columns.Clear();
-
-                //Montando a ordem das colunas 
-                //Lembrando que a coluna a Id não está  visível.
-                dgvListaDeProdutos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id", HeaderText = "Id", Visible = false });
-                dgvListaDeProdutos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Nome", HeaderText = "Nome" });
-                dgvListaDeProdutos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Descricao", HeaderText = "Descrição" });
-                dgvListaDeProdutos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Preco", HeaderText = "Preço" });
-                dgvListaDeProdutos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Estoque", HeaderText = "Quantidade" });
-
-                //DataSource
-                dgvListaDeProdutos.DataSource = listaProdutos;
+                if (produto != null)
+                {
+                    txtNome.Text = produto.Nome;
+                    txtDescricao.Text = produto.Descricao;
+                    txtPreco.Text = Convert.ToDecimal(produto.Preco).ToString();
+                    txtEstoque.Text = Convert.ToInt32(produto.Estoque).ToString();
+                }
+                else
+                {
+                    CadastrarNovo();
+                }
             }
             catch (Exception ex)
             {
@@ -126,12 +122,14 @@ namespace DeMaria.UI
             {
                 idProduto = produtoRepository.Inserir(produto);
                 MessageBox.Show("Produto salvo com sucesso", "De Maria", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CadastrarNovo();
             }
             else
             {
                 if(produtoRepository.Update(produto) > 0)
                 {
                     MessageBox.Show("Produto alterado com sucesso", "De Maria", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CadastrarNovo();
                 }
             }
         }
@@ -153,21 +151,6 @@ namespace DeMaria.UI
         private void btnSair_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-        //Commando para puxar a selecionar para os campos da tela.
-        private void dgvListaDeProdutos_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            //Selecionando a linha
-            var linhaSelecionada = dgvListaDeProdutos.CurrentRow;
-
-            //o idProduto pegará o valor do idProduto, para alteração da informação selecionada
-            idProduto = Convert.ToInt32(linhaSelecionada.Cells[0].Value);
-
-            //Puxando os valores para o campos
-            txtNome.Text = Convert.ToString(linhaSelecionada.Cells[1].Value);
-            txtDescricao.Text = Convert.ToString(linhaSelecionada.Cells[2].Value);
-            txtPreco.Text = Convert.ToDecimal(linhaSelecionada.Cells[3].Value).ToString();
-            txtEstoque.Text = Convert.ToInt32(linhaSelecionada.Cells[4].Value).ToString();
         }
     }
 }

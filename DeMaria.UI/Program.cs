@@ -16,7 +16,7 @@ namespace DeMaria.UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmCadastroDeProdutos());
+            Application.Run(new frmMenu());
         }
     }
 }

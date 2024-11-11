@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using Npgsql;
+using NpgsqlTypes;
 
 namespace DeMaria.DAL
 {
@@ -39,12 +40,12 @@ namespace DeMaria.DAL
 
         FactoryConnection()
         {
-            if(System.Net.Dns.GetHostName().Equals("DESKTOP-IQ178NE"))
+            if(System.Net.Dns.GetHostName().Equals("Seu-pc))
             {
                 Server = "localhost";
                 Port = 5432;
-                Database = "testesdb";
-                User = "***";
+                Database = "****db";
+                User = "****";
                 Password = "****";
             }
         }
@@ -97,7 +98,76 @@ namespace DeMaria.DAL
                 }
             }
         }
+       
+        /// <summary>
+        /// Método de Retorno Inteiro.
+        /// Executa dois comandos aninhados em uma transação, sendo que o primeiro
+        /// poderá retornar um int para ser utilizado no segundo.
+        /// </summary>
+        public void ExecuteNested(NpgsqlCommand mainCommand, string childCommmand, int returnAffectedRows)
+        {
+            //Guardar o código gerado pelo primeiro comando
+            int returnRow = 0;
 
+            //Abrindo a conexão
+            AbrirBancoDeDados();
+
+            using (mainCommand.Connection = conexao)
+            {
+                //Inicia a transação
+                mainCommand.Transaction = conexao.BeginTransaction();
+
+                try
+                {
+                    //Executar o primeiro comtnado com retorno do código se houver
+                    returnRow = Convert.ToInt32(mainCommand.ExecuteScalar());
+
+                    //Monta o próximo comando com a string do segundo comando sql. Isso ocorre porque apenas
+                    //o primeiro comando possui o controle de transação
+                    mainCommand.CommandText = childCommmand;
+
+                    //Quando o segundo comando precisar utilizar um código gerado pelo primeiro
+                    //ele pode ser passado como parâmetro
+                    if (returnRow != 0)
+                        mainCommand.Parameters.Add("@ReturnId", NpgsqlDbType.Integer, 10).Value = returnRow;
+
+                    //Executa o segundo comando
+                    returnAffectedRows = mainCommand.ExecuteNonQuery();
+
+                    if(returnRow != 0 && returnAffectedRows != 0)
+                    {
+                        returnAffectedRows = returnRow;
+                    }
+
+                    //Efetiva a execução dos dois comandos
+                    mainCommand.Transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {                   
+                        // Desfaz os comandos em caso de erro
+                        mainCommand.Transaction.Rollback("SampleTransaction");
+
+                    }
+                    catch (NpgsqlException nsql)
+                    {
+                        if(mainCommand.Connection != null)
+                        {
+                            throw new Exception("An exception of type " + nsql.GetType() +
+                            " was encountered while attempting to roll back the transaction.");
+                        }
+                    }
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    mainCommand.Dispose();
+                    FecharBancoDeDados();
+                }
+            }
+        }
+       
         //Métodos para Obter os valores
         public void ExecuteQuery(NpgsqlCommand sqlCommand, DataSet returnDataSet, string nameTableDataSet)
         {

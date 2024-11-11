@@ -50,3 +50,8 @@ C:\DevMilton\TesteMD\DeMaria.UI\obj\Debug\DeMaria.UI.csproj.CopyComplete
 C:\DevMilton\TesteMD\DeMaria.UI\obj\Debug\DeMaria.UI.exe
 C:\DevMilton\TesteMD\DeMaria.UI\obj\Debug\DeMaria.UI.pdb
 C:\DevMilton\TesteMD\DeMaria.UI\obj\Debug\DeMaria.UI.frmCadastroDeProdutos.resources
+C:\DevMilton\TesteMD\DeMaria.UI\obj\Debug\DeMaria.UI.frmMenu.resources
+C:\DevMilton\TesteMD\DeMaria.UI\obj\Debug\DeMaria.UI.frmPesquisaCliente.resources
+C:\DevMilton\TesteMD\DeMaria.UI\obj\Debug\DeMaria.UI.frmVendaDeProdutos.resources
+C:\DevMilton\TesteMD\DeMaria.UI\obj\Debug\DeMaria.UI.frmPesquisaVendasProdutos.resources
+C:\DevMilton\TesteMD\DeMaria.UI\obj\Debug\DeMaria.UI.PesquisaProduto.resources

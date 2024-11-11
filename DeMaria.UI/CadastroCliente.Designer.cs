@@ -47,15 +47,13 @@
             this.btnNovo = new System.Windows.Forms.Button();
             this.btnGravar = new System.Windows.Forms.Button();
             this.btnSair = new System.Windows.Forms.Button();
-            this.dgvListaDeClientes = new System.Windows.Forms.DataGridView();
             this.btnDeletar = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvListaDeClientes)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(40, 18);
+            this.label1.Location = new System.Drawing.Point(47, 33);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 0;
@@ -63,21 +61,21 @@
             // 
             // txtNome
             // 
-            this.txtNome.Location = new System.Drawing.Point(43, 34);
+            this.txtNome.Location = new System.Drawing.Point(50, 49);
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(483, 20);
             this.txtNome.TabIndex = 1;
             // 
             // txtRua
             // 
-            this.txtRua.Location = new System.Drawing.Point(43, 85);
+            this.txtRua.Location = new System.Drawing.Point(50, 100);
             this.txtRua.Name = "txtRua";
             this.txtRua.Size = new System.Drawing.Size(278, 20);
             this.txtRua.TabIndex = 2;
             // 
             // txtNumero
             // 
-            this.txtNumero.Location = new System.Drawing.Point(352, 85);
+            this.txtNumero.Location = new System.Drawing.Point(359, 100);
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(174, 20);
             this.txtNumero.TabIndex = 4;
@@ -86,7 +84,7 @@
             // 
             this.lblRua.AutoSize = true;
             this.lblRua.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lblRua.Location = new System.Drawing.Point(40, 69);
+            this.lblRua.Location = new System.Drawing.Point(47, 84);
             this.lblRua.Name = "lblRua";
             this.lblRua.Size = new System.Drawing.Size(27, 13);
             this.lblRua.TabIndex = 3;
@@ -95,7 +93,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(349, 69);
+            this.label2.Location = new System.Drawing.Point(356, 84);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 5;
@@ -104,7 +102,7 @@
             // lblComplemento
             // 
             this.lblComplemento.AutoSize = true;
-            this.lblComplemento.Location = new System.Drawing.Point(41, 118);
+            this.lblComplemento.Location = new System.Drawing.Point(48, 133);
             this.lblComplemento.Name = "lblComplemento";
             this.lblComplemento.Size = new System.Drawing.Size(71, 13);
             this.lblComplemento.TabIndex = 7;
@@ -112,7 +110,7 @@
             // 
             // txtComplemento
             // 
-            this.txtComplemento.Location = new System.Drawing.Point(43, 134);
+            this.txtComplemento.Location = new System.Drawing.Point(50, 149);
             this.txtComplemento.Name = "txtComplemento";
             this.txtComplemento.Size = new System.Drawing.Size(278, 20);
             this.txtComplemento.TabIndex = 6;
@@ -120,7 +118,7 @@
             // lblBairro
             // 
             this.lblBairro.AutoSize = true;
-            this.lblBairro.Location = new System.Drawing.Point(349, 118);
+            this.lblBairro.Location = new System.Drawing.Point(356, 133);
             this.lblBairro.Name = "lblBairro";
             this.lblBairro.Size = new System.Drawing.Size(34, 13);
             this.lblBairro.TabIndex = 9;
@@ -128,14 +126,14 @@
             // 
             // txtBairro
             // 
-            this.txtBairro.Location = new System.Drawing.Point(352, 134);
+            this.txtBairro.Location = new System.Drawing.Point(359, 149);
             this.txtBairro.Name = "txtBairro";
             this.txtBairro.Size = new System.Drawing.Size(174, 20);
             this.txtBairro.TabIndex = 8;
             // 
             // mskCep
             // 
-            this.mskCep.Location = new System.Drawing.Point(43, 176);
+            this.mskCep.Location = new System.Drawing.Point(50, 191);
             this.mskCep.Mask = "00000-000";
             this.mskCep.Name = "mskCep";
             this.mskCep.Size = new System.Drawing.Size(100, 20);
@@ -144,7 +142,7 @@
             // lblCep
             // 
             this.lblCep.AutoSize = true;
-            this.lblCep.Location = new System.Drawing.Point(41, 160);
+            this.lblCep.Location = new System.Drawing.Point(48, 175);
             this.lblCep.Name = "lblCep";
             this.lblCep.Size = new System.Drawing.Size(28, 13);
             this.lblCep.TabIndex = 11;
@@ -153,7 +151,7 @@
             // lblTelefone
             // 
             this.lblTelefone.AutoSize = true;
-            this.lblTelefone.Location = new System.Drawing.Point(41, 208);
+            this.lblTelefone.Location = new System.Drawing.Point(48, 223);
             this.lblTelefone.Name = "lblTelefone";
             this.lblTelefone.Size = new System.Drawing.Size(49, 13);
             this.lblTelefone.TabIndex = 14;
@@ -161,7 +159,7 @@
             // 
             // mskTelefone
             // 
-            this.mskTelefone.Location = new System.Drawing.Point(45, 224);
+            this.mskTelefone.Location = new System.Drawing.Point(52, 239);
             this.mskTelefone.Mask = "(00) 00000-0000";
             this.mskTelefone.Name = "mskTelefone";
             this.mskTelefone.Size = new System.Drawing.Size(100, 20);
@@ -170,7 +168,7 @@
             // lblEmail
             // 
             this.lblEmail.AutoSize = true;
-            this.lblEmail.Location = new System.Drawing.Point(166, 208);
+            this.lblEmail.Location = new System.Drawing.Point(173, 223);
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new System.Drawing.Size(32, 13);
             this.lblEmail.TabIndex = 16;
@@ -178,7 +176,7 @@
             // 
             // txtEmail
             // 
-            this.txtEmail.Location = new System.Drawing.Point(168, 224);
+            this.txtEmail.Location = new System.Drawing.Point(175, 239);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(358, 20);
             this.txtEmail.TabIndex = 17;
@@ -186,7 +184,7 @@
             // btnNovo
             // 
             this.btnNovo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNovo.Location = new System.Drawing.Point(43, 264);
+            this.btnNovo.Location = new System.Drawing.Point(50, 279);
             this.btnNovo.Name = "btnNovo";
             this.btnNovo.Size = new System.Drawing.Size(93, 50);
             this.btnNovo.TabIndex = 18;
@@ -197,7 +195,7 @@
             // btnGravar
             // 
             this.btnGravar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGravar.Location = new System.Drawing.Point(169, 264);
+            this.btnGravar.Location = new System.Drawing.Point(176, 279);
             this.btnGravar.Name = "btnGravar";
             this.btnGravar.Size = new System.Drawing.Size(97, 50);
             this.btnGravar.TabIndex = 19;
@@ -208,7 +206,7 @@
             // btnSair
             // 
             this.btnSair.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSair.Location = new System.Drawing.Point(433, 264);
+            this.btnSair.Location = new System.Drawing.Point(440, 279);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(93, 50);
             this.btnSair.TabIndex = 21;
@@ -216,19 +214,10 @@
             this.btnSair.UseVisualStyleBackColor = true;
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
             // 
-            // dgvListaDeClientes
-            // 
-            this.dgvListaDeClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvListaDeClientes.Location = new System.Drawing.Point(43, 329);
-            this.dgvListaDeClientes.Name = "dgvListaDeClientes";
-            this.dgvListaDeClientes.Size = new System.Drawing.Size(483, 131);
-            this.dgvListaDeClientes.TabIndex = 22;
-            this.dgvListaDeClientes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListaDeClientes_CellClick);
-            // 
             // btnDeletar
             // 
             this.btnDeletar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDeletar.Location = new System.Drawing.Point(296, 264);
+            this.btnDeletar.Location = new System.Drawing.Point(303, 279);
             this.btnDeletar.Name = "btnDeletar";
             this.btnDeletar.Size = new System.Drawing.Size(97, 50);
             this.btnDeletar.TabIndex = 23;
@@ -240,9 +229,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(853, 472);
+            this.ClientSize = new System.Drawing.Size(948, 489);
             this.Controls.Add(this.btnDeletar);
-            this.Controls.Add(this.dgvListaDeClientes);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.btnGravar);
             this.Controls.Add(this.btnNovo);
@@ -262,10 +250,9 @@
             this.Controls.Add(this.txtRua);
             this.Controls.Add(this.txtNome);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmCadastroDeCliente";
             this.Text = "Cadastro de Cliente";
-            this.Load += new System.EventHandler(this.frmCadastroDeCliente_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvListaDeClientes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -292,7 +279,6 @@
         private System.Windows.Forms.Button btnNovo;
         private System.Windows.Forms.Button btnGravar;
         private System.Windows.Forms.Button btnSair;
-        private System.Windows.Forms.DataGridView dgvListaDeClientes;
         private System.Windows.Forms.Button btnDeletar;
     }
 }

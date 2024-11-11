@@ -67,7 +67,11 @@ namespace DeMaria.BLL
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(true);
+            //Tarefa da fila é finalizado para
+            //previnir a finalização do código para este objeto 
+            //executando um segundo tempo.
+            GC.SuppressFinalize(this);
         }
 
         public int Inserir(Produto produto)
@@ -239,5 +243,26 @@ namespace DeMaria.BLL
                 }
             }
         }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            //Checa se o dispose já foi chamado
+            if (this.disposed)
+            {
+                //Se ok, fecha todos os recursos que não são utilizados
+                if (disposing)
+                {
+                    //Liberando recursos gerenciados
+                    if (component != null)
+                        component.Dispose();
+
+                    //Lança os recursos não gerenciáveis. Se o descarte é falso,
+                    //apenas o seguinte código é executado
+                    handle = IntPtr.Zero;
+                }
+                disposed = true;
+            }
+        }
+
     }
 }

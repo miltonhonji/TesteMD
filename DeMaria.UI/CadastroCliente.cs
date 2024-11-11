@@ -20,43 +20,38 @@ namespace DeMaria.UI
 
         public frmCadastroDeCliente()
         {
+
+        }
+
+        public frmCadastroDeCliente(int clienteId)
+        {
             InitializeComponent();
+            idCliente = clienteId;
+            CarregarDados();
         }
 
-        private void frmCadastroDeCliente_Load(object sender, EventArgs e)
+        private void CarregarDados()
         {
-            CarregarClienteParaODataGridView();
-        }
-
-        private void CarregarClienteParaODataGridView()
-        {
-            //Instancia da classe
+            //Instâncias das classes de cliente e dto.cliente
             ClienteRepository clienteRepository = new ClienteRepository();
+            Cliente cliente = clienteRepository.Obter(idCliente);
 
             try
             {
-                //Utilizando listas, que eu montei na classe ClienteRepository.
-                List<Cliente> listaDeClientes = clienteRepository.Listar();
-
-                //A coluna não é gerada automaticamente.
-                dgvListaDeClientes.AutoGenerateColumns = false;
-                //Populando os clientes na datagridview.
-                dgvListaDeClientes.Columns.Clear();
-
-                //Montando a ordem das colunas para o datagrid
-                //Lembrando que a coluna a Id não está  visível.
-                dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id", HeaderText = "Id", Visible = false });
-                dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Nome", HeaderText = "Nome" });
-                dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Rua", HeaderText = "Rua" });
-                dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Numero", HeaderText = "Número" });
-                dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Complemento", HeaderText = "Complemento" });
-                dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Bairro", HeaderText = "Bairro" });
-                dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Cep", HeaderText = "Cep" });
-                dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Telefone", HeaderText = "Telefone" });
-                dgvListaDeClientes.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Email", HeaderText = "Email" });
-
-                //O DataSource recebendo a lista de Clientes.
-                dgvListaDeClientes.DataSource = listaDeClientes;
+                if (cliente != null)
+                {
+                    txtNome.Text = cliente.Nome;
+                    txtRua.Text = cliente.Rua;
+                    txtNumero.Text = cliente.Numero.ToString();
+                    txtComplemento.Text = cliente.Complemento;
+                    txtBairro.Text = cliente.Bairro;
+                    mskCep.Text = cliente.Cep;
+                    mskTelefone.Text = cliente.Telefone;
+                }
+                else
+                {
+                    CadastrarNovo();
+                }
             }
             catch (Exception ex)
             {
@@ -147,6 +142,7 @@ namespace DeMaria.UI
                 {
                     idCliente = clienteRepository.Inserir(cliente);
                     MessageBox.Show("Cliente salvo com sucesso", "De Maria", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CadastrarNovo();
                 }
                 else
                 {
@@ -154,6 +150,7 @@ namespace DeMaria.UI
                     if (clienteRepository.Update(cliente) > 0)
                     {
                         MessageBox.Show("Cliente alterado com sucesso", "De Maria", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CadastrarNovo();
                     }
                 }
             }
@@ -161,26 +158,6 @@ namespace DeMaria.UI
             {
                 throw new Exception(ex.Message);
             }
-        }
-
-        private void dgvListaDeClientes_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            //Pegar o valor da linha selecionada
-            var Row = dgvListaDeClientes.CurrentRow;
-            //idCliente recebendo o valor da linha que será populado na lista do datagrid
-            //Lembrando que o idCliente (primeira coluna, está oculta)
-            idCliente = Convert.ToInt32(Row.Cells[0].Value);
-
-            //Após escolher um cliente da lista, quando clicamos em cima do nome, as informações, iráo popular para os campos acima            
-            //Lembrando que está seguindo a ordem do grid.
-            txtNome.Text = Row.Cells[1].Value.ToString();
-            txtRua.Text = Row.Cells[2].Value.ToString();
-            txtNumero.Text = Convert.ToInt32(Row.Cells[3].Value).ToString();
-            txtComplemento.Text = Row.Cells[4].Value.ToString();
-            txtBairro.Text = Row.Cells[5].Value.ToString();
-            mskCep.Text = Row.Cells[6].Value.ToString();
-            mskTelefone.Text = Row.Cells[7].Value.ToString();
-            txtEmail.Text = Row.Cells[8].Value.ToString();
         }
 
         private void btnNovo_Click(object sender, EventArgs e)

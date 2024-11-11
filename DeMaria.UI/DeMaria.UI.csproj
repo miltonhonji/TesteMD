@@ -95,11 +95,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cadastro de Produtos.cs">
+    <Compile Include="CadastroDeProdutos.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cadastro de Produtos.Designer.cs">
-      <DependentUpon>Cadastro de Produtos.cs</DependentUpon>
+    <Compile Include="CadastroDeProdutos.Designer.cs">
+      <DependentUpon>CadastroDeProdutos.cs</DependentUpon>
     </Compile>
     <Compile Include="CadastroCliente.cs">
       <SubType>Form</SubType>
@@ -107,13 +107,58 @@
     <Compile Include="CadastroCliente.Designer.cs">
       <DependentUpon>CadastroCliente.cs</DependentUpon>
     </Compile>
+    <Compile Include="PesquisaProduto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PesquisaProduto.Designer.cs">
+      <DependentUpon>PesquisaProduto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PesquisaVendasProdutos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PesquisaVendasProdutos.Designer.cs">
+      <DependentUpon>PesquisaVendasProdutos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VendaDeProdutos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VendaDeProdutos.Designer.cs">
+      <DependentUpon>VendaDeProdutos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Menu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menu.Designer.cs">
+      <DependentUpon>Menu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PesquisaCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PesquisaCliente.Designer.cs">
+      <DependentUpon>PesquisaCliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Cadastro de Produtos.resx">
-      <DependentUpon>Cadastro de Produtos.cs</DependentUpon>
+    <EmbeddedResource Include="CadastroDeProdutos.resx">
+      <DependentUpon>CadastroDeProdutos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CadastroCliente.resx">
       <DependentUpon>CadastroCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PesquisaProduto.resx">
+      <DependentUpon>PesquisaProduto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PesquisaVendasProdutos.resx">
+      <DependentUpon>PesquisaVendasProdutos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VendaDeProdutos.resx">
+      <DependentUpon>VendaDeProdutos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menu.resx">
+      <DependentUpon>Menu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PesquisaCliente.resx">
+      <DependentUpon>PesquisaCliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -44,8 +44,10 @@
     <Compile Include="Base.cs" />
     <Compile Include="Cliente.cs" />
     <Compile Include="Endereco.cs" />
+    <Compile Include="ItemVenda.cs" />
     <Compile Include="Produto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Venda.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

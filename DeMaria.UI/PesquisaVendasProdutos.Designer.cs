@@ -31,8 +31,10 @@
             this.cboCliente = new System.Windows.Forms.ComboBox();
             this.lblNomeDoCliente = new System.Windows.Forms.Label();
             this.btnNovo = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnSelecionar = new System.Windows.Forms.Button();
             this.btnSair = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // cboCliente
@@ -40,7 +42,7 @@
             this.cboCliente.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboCliente.FormattingEnabled = true;
-            this.cboCliente.Location = new System.Drawing.Point(288, 57);
+            this.cboCliente.Location = new System.Drawing.Point(27, 61);
             this.cboCliente.Name = "cboCliente";
             this.cboCliente.Size = new System.Drawing.Size(372, 21);
             this.cboCliente.TabIndex = 6;
@@ -48,7 +50,7 @@
             // lblNomeDoCliente
             // 
             this.lblNomeDoCliente.AutoSize = true;
-            this.lblNomeDoCliente.Location = new System.Drawing.Point(285, 38);
+            this.lblNomeDoCliente.Location = new System.Drawing.Point(25, 32);
             this.lblNomeDoCliente.Name = "lblNomeDoCliente";
             this.lblNomeDoCliente.Size = new System.Drawing.Size(85, 13);
             this.lblNomeDoCliente.TabIndex = 7;
@@ -56,7 +58,7 @@
             // 
             // btnNovo
             // 
-            this.btnNovo.Location = new System.Drawing.Point(765, 148);
+            this.btnNovo.Location = new System.Drawing.Point(585, 105);
             this.btnNovo.Name = "btnNovo";
             this.btnNovo.Size = new System.Drawing.Size(119, 50);
             this.btnNovo.TabIndex = 8;
@@ -64,18 +66,18 @@
             this.btnNovo.UseVisualStyleBackColor = true;
             this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
             // 
-            // button1
+            // btnSelecionar
             // 
-            this.button1.Location = new System.Drawing.Point(765, 216);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(119, 50);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "Novo";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnSelecionar.Location = new System.Drawing.Point(585, 173);
+            this.btnSelecionar.Name = "btnSelecionar";
+            this.btnSelecionar.Size = new System.Drawing.Size(119, 50);
+            this.btnSelecionar.TabIndex = 9;
+            this.btnSelecionar.Text = "Selecionar ";
+            this.btnSelecionar.UseVisualStyleBackColor = true;
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(765, 287);
+            this.btnSair.Location = new System.Drawing.Point(585, 244);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(119, 50);
             this.btnSair.TabIndex = 10;
@@ -83,13 +85,22 @@
             this.btnSair.UseVisualStyleBackColor = true;
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(25, 105);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(539, 267);
+            this.dataGridView1.TabIndex = 11;
+            // 
             // frmPesquisaVendasProdutos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1080, 612);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnSair);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnSelecionar);
             this.Controls.Add(this.btnNovo);
             this.Controls.Add(this.lblNomeDoCliente);
             this.Controls.Add(this.cboCliente);
@@ -97,6 +108,7 @@
             this.Name = "frmPesquisaVendasProdutos";
             this.Text = "PesquisaVendasProdutos";
             this.Load += new System.EventHandler(this.frmPesquisaVendasProdutos_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -106,7 +118,8 @@
         private System.Windows.Forms.ComboBox cboCliente;
         private System.Windows.Forms.Label lblNomeDoCliente;
         private System.Windows.Forms.Button btnNovo;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSelecionar;
         private System.Windows.Forms.Button btnSair;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

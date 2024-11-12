@@ -17,7 +17,7 @@ namespace DeMaria.UI
         #region Variáveis
 
         private int idPesquisa;
-        //private int idCliente;
+        private int idVenda;
 
         #endregion Variáveis
 
@@ -77,7 +77,7 @@ namespace DeMaria.UI
                 frmMenu menuPrincipal = (frmMenu)Application.OpenForms["frmMenu"];
 
                 if (menuPrincipal != null)
-                    menuPrincipal.AbrirFormulario(new frmVendaDeProdutos(clienteId));
+                    menuPrincipal.AbrirFormulario(new frmVendaDeProdutos(idVenda, clienteId));
             }
         }
 

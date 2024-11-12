@@ -35,6 +35,35 @@ namespace DeMaria.BLL
             throw new NotImplementedException();
         }
 
+        public List<Produto> ObterListaDeProdutos()
+        {
+            string linhaSql = null;
+
+            using (NpgsqlCommand selectCommand = new NpgsqlCommand())
+            {
+                linhaSql = "SELECT ";
+                linhaSql += "id_produto, ";
+                linhaSql += "CAST(FALSE AS BOOLEAN) AS 'Selecionar', ";
+                linhaSql += "nome, ";
+                linhaSql += "preco, ";
+                linhaSql += "Estoque ";
+                linhaSql += "FROM produto ";
+                linhaSql += "ORDER BY Id_Produto ";
+
+                selectCommand.CommandText = linhaSql;
+
+                return factoryConnection.ExecuteQueryList(selectCommand, reader => new Produto
+                {
+                    Id = Convert.ToInt32(reader["Id_Produto"]),
+                    Nome = Convert.ToString(reader["Nome"]),
+                    Descricao = Convert.ToString(reader["Descricao"]),
+                    Preco = Convert.ToDecimal(reader["Preco"]),
+                    Estoque = Convert.ToInt32(reader["Estoque"])
+                });
+
+            }
+        }
+
         public int RegistrarVenda(Venda venda, List<ItemVenda> itensVenda)
         {
             string linhaSql;
@@ -51,24 +80,24 @@ namespace DeMaria.BLL
                     linhaSql += "Id_Cliente, ";
                     linhaSql += "Data_Venda, ";
                     linhaSql += "Valor_Total ";
-                    linhaSql += ") VALUES ";
+                    linhaSql += ")VALUES ";
                     linhaSql += "( ";
                     linhaSql += "@Id_Cliente, ";
                     linhaSql += "@Data_Venda, ";
                     linhaSql += "@Valor_Total ";
                     linhaSql += ") RETURNING Id_Venda ";
 
-                    linhaSqlChild = "INSERT INTO ItensVenda ";
+                    linhaSqlChild = "INSERT INTO ItemVenda ";
                     linhaSqlChild += "( ";
                     linhaSqlChild += "Id_Venda, ";
                     linhaSqlChild += "Id_Produto, ";
                     linhaSqlChild += "Quantidade ";
-                    linhaSqlChild += ") VALUES ";
+                    linhaSqlChild += ")VALUES ";
                     linhaSqlChild += "( ";
-                    linhaSqlChild += "@Id_Venda, ";
+                    linhaSqlChild += "@ReturnId, ";
                     linhaSqlChild += "@Id_Produto, ";
                     linhaSqlChild += "@Quantidade ";
-                    linhaSqlChild += ") RETURNING Id_Item_Venda ";
+                    linhaSqlChild += ") ";
 
                     insertCommand.CommandText = linhaSql;
 
@@ -78,7 +107,7 @@ namespace DeMaria.BLL
 
                     foreach (var item in itensVenda)
                     {
-                        insertCommand.Parameters.AddWithValue("@Id_Venda", item.IdVenda);
+                        //insertCommand.Parameters.AddWithValue("@Id_Venda", item.IdVenda);
                         insertCommand.Parameters.AddWithValue("@Id_Produto", item.IdProduto);
                         insertCommand.Parameters.AddWithValue("@Quantidade", item.Quantidade);
                     }

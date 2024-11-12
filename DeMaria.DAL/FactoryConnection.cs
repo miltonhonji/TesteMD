@@ -40,13 +40,13 @@ namespace DeMaria.DAL
 
         FactoryConnection()
         {
-            if(System.Net.Dns.GetHostName().Equals("Seu-pc))
+            if(System.Net.Dns.GetHostName().Equals("DESKTOP-IQ178NE"))
             {
                 Server = "localhost";
                 Port = 5432;
-                Database = "****db";
-                User = "****";
-                Password = "****";
+                Database = "demariadb";
+                User = "postgres";
+                Password = "admin";
             }
         }
 
@@ -108,18 +108,19 @@ namespace DeMaria.DAL
         {
             //Guardar o código gerado pelo primeiro comando
             int returnRow = 0;
-
+            //Inicializa o valor
+            returnAffectedRows = 0;
             //Abrindo a conexão
             AbrirBancoDeDados();
 
             using (mainCommand.Connection = conexao)
             {
                 //Inicia a transação
-                mainCommand.Transaction = conexao.BeginTransaction();
+                mainCommand.Transaction = conexao.BeginTransaction(IsolationLevel.ReadCommitted);
 
                 try
                 {
-                    //Executar o primeiro comtnado com retorno do código se houver
+                    //Variável returnRow para receber o ExecuteScalar
                     returnRow = Convert.ToInt32(mainCommand.ExecuteScalar());
 
                     //Monta o próximo comando com a string do segundo comando sql. Isso ocorre porque apenas
@@ -129,7 +130,9 @@ namespace DeMaria.DAL
                     //Quando o segundo comando precisar utilizar um código gerado pelo primeiro
                     //ele pode ser passado como parâmetro
                     if (returnRow != 0)
-                        mainCommand.Parameters.Add("@ReturnId", NpgsqlDbType.Integer, 10).Value = returnRow;
+                    { 
+                        mainCommand.Parameters.AddWithValue("@ReturnId", returnRow);
+                    }
 
                     //Executa o segundo comando
                     returnAffectedRows = mainCommand.ExecuteNonQuery();

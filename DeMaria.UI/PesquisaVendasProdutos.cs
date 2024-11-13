@@ -18,6 +18,9 @@ namespace DeMaria.UI
 
         private int idPesquisa;
         private int idVenda;
+        private int idCliente;
+        //Variável para ápresentar erros na hora carregar o grid no combobox.
+        private bool feito = false;
 
         #endregion Variáveis
 
@@ -39,7 +42,8 @@ namespace DeMaria.UI
         private void frmPesquisaVendasProdutos_Load(object sender, EventArgs e)
         {
             CarregarComboBox();
-            CarregarListaDeVendas();
+            feito = true;
+            CarregarListaDeVendas(Convert.ToInt32(cboCliente.SelectedValue.ToString()));
         }
 
         //Carregar a Lista Suspensa para escolher o cliente
@@ -56,19 +60,17 @@ namespace DeMaria.UI
             //O valor irá mostrar o nome do cliente
             cboCliente.DisplayMember = "Nome";
             cboCliente.ValueMember = "Id";
-
         }
 
-        private void CarregarListaDeVendas()
+        private void CarregarListaDeVendas(int idCliente)
         {
             //Instanciar as classes do VendaRepository e a DTO.Venda
             VendaRepository vendaRepository = new VendaRepository();
-            Venda venda = new Venda();
 
             try
             {
                 //Lista de cliente, aonde os dados serão obtidos pela lista da classe VendaRepository
-                List<Venda> listaDeVendas = vendaRepository.ListarVendas();
+                List<Venda> listaDeVendas = vendaRepository.ListarVendas(idCliente);
 
                 //Gerar as colunas manualmente
                 dgvListaDeVendas.AutoGenerateColumns = false;
@@ -77,10 +79,10 @@ namespace DeMaria.UI
                 dgvListaDeVendas.Columns.Clear();
 
                 //Os nomes das colunas no datagridView
-                dgvListaDeVendas.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id_Venda", HeaderText = "Id_Venda", Visible = false });
-                dgvListaDeVendas.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id_Cliente", HeaderText = "Id_Cliente", Visible = false });
-                dgvListaDeVendas.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Data_Venda", HeaderText = "Data_Venda" });
-                dgvListaDeVendas.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Valor_Total", HeaderText = "Valor_Total" });
+                dgvListaDeVendas.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "IdVenda", HeaderText = "Id_Venda", Visible=false });
+                dgvListaDeVendas.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "IdCliente", HeaderText = "Id Cliente", Visible = false });
+                dgvListaDeVendas.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "DataVenda", HeaderText = "Data Venda" });
+                dgvListaDeVendas.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "ValorTotal", HeaderText = "Valor Total" });
 
                 dgvListaDeVendas.DataSource = listaDeVendas;
             }
@@ -89,6 +91,7 @@ namespace DeMaria.UI
                 throw new Exception(ex.Message);
             }
         }
+
 
         private void btnNovo_Click(object sender, EventArgs e)
         {
@@ -116,6 +119,39 @@ namespace DeMaria.UI
         private void btnSair_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void cboCliente_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(feito)
+                CarregarListaDeVendas(Convert.ToInt32(cboCliente.SelectedValue.ToString()));
+        }
+
+        private void btnSelecionar_Click(object sender, EventArgs e)
+        {
+            dgvListaDeVendas_CellClick(null, null);
+        }
+
+        private void dgvListaDeVendas_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            frmMenu menuPrincipal = (frmMenu)Application.OpenForms["frmMenu"];
+
+            try
+            {
+                //Escolhe o cliente na posição atual
+                var linhaSelecionada = dgvListaDeVendas.CurrentRow;
+
+                //idcliente recebe o valor da linha
+                idVenda = Convert.ToInt32(linhaSelecionada.Cells[0].Value);
+                idCliente = Convert.ToInt32(linhaSelecionada.Cells[1].Value);
+
+                if (menuPrincipal != null)
+                    menuPrincipal.AbrirFormulario(new frmVendaDeProdutos(idVenda, idCliente));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

@@ -11,5 +11,6 @@ namespace DeMaria.DTO
         public string Descricao { get; set; }
         public Decimal Preco { get; set; }
         public int Estoque { get ; set; }
+        public int IdItemVenda { get; set; }
     }
 }

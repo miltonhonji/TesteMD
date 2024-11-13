@@ -137,12 +137,6 @@
     <Compile Include="PesquisaVendasProdutos.Designer.cs">
       <DependentUpon>PesquisaVendasProdutos.cs</DependentUpon>
     </Compile>
-    <Compile Include="SelecionarProdutos.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SelecionarProdutos.Designer.cs">
-      <DependentUpon>SelecionarProdutos.cs</DependentUpon>
-    </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="VendaDeProdutos.cs">
       <SubType>Form</SubType>

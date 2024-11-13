@@ -44,8 +44,9 @@
             this.cboCliente.FormattingEnabled = true;
             this.cboCliente.Location = new System.Drawing.Point(27, 61);
             this.cboCliente.Name = "cboCliente";
-            this.cboCliente.Size = new System.Drawing.Size(372, 21);
+            this.cboCliente.Size = new System.Drawing.Size(537, 21);
             this.cboCliente.TabIndex = 6;
+            this.cboCliente.SelectedIndexChanged += new System.EventHandler(this.cboCliente_SelectedIndexChanged);
             // 
             // lblNomeDoCliente
             // 
@@ -74,6 +75,7 @@
             this.btnSelecionar.TabIndex = 9;
             this.btnSelecionar.Text = "Selecionar ";
             this.btnSelecionar.UseVisualStyleBackColor = true;
+            this.btnSelecionar.Click += new System.EventHandler(this.btnSelecionar_Click);
             // 
             // btnSair
             // 
@@ -88,10 +90,11 @@
             // dgvListaDeVendas
             // 
             this.dgvListaDeVendas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvListaDeVendas.Location = new System.Drawing.Point(25, 105);
+            this.dgvListaDeVendas.Location = new System.Drawing.Point(27, 105);
             this.dgvListaDeVendas.Name = "dgvListaDeVendas";
-            this.dgvListaDeVendas.Size = new System.Drawing.Size(539, 267);
+            this.dgvListaDeVendas.Size = new System.Drawing.Size(552, 327);
             this.dgvListaDeVendas.TabIndex = 11;
+            this.dgvListaDeVendas.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListaDeVendas_CellClick);
             // 
             // frmPesquisaVendasProdutos
             // 

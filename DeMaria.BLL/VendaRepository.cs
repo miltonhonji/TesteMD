@@ -35,6 +35,91 @@ namespace DeMaria.BLL
             throw new NotImplementedException();
         }
 
+        public List<Venda> ListarVendas(int idCliente)
+        {
+            string linhaSql;
+
+            using (NpgsqlCommand selectCommand = new NpgsqlCommand())
+            {
+                try
+                {
+                    linhaSql = "SELECT  ";
+                    linhaSql += "Id_Venda, ";
+                    linhaSql += "Id_Cliente, ";
+                    linhaSql += "Data_Venda, ";
+                    linhaSql += "Valor_Total ";
+                    linhaSql += "FROM Venda ";
+                    linhaSql += "WHERE Id_Cliente = @Id_Cliente ";
+                    linhaSql += "Order by Id_Venda ";
+
+                    selectCommand.CommandText = linhaSql;
+
+                    selectCommand.Parameters.Add("@Id_Cliente", NpgsqlDbType.Integer, 4, "Id_Cliente").Value = idCliente;
+
+                    return factoryConnection.ExecuteQueryList(selectCommand, reader => new Venda
+                    {
+                        IdVenda = Convert.ToInt32(reader["Id_Venda"]),
+                        IdCliente = Convert.ToInt32(reader["Id_Cliente"]),
+                        DataVenda = Convert.ToDateTime(reader["Data_Venda"]),
+                        ValorTotal = Convert.ToDecimal(reader["Valor_Total"])
+                    });
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+        }
+
+        //Obter a venda
+        public Venda Obter(int id)
+        {
+            //Instâncias de DataSet
+            DataSet dsVenda = new DataSet();
+            //Instâncias de string de conexão
+            string linhaSql = null;
+            //Instâncias de entidades
+            DTO.Venda venda = null;
+
+            using (NpgsqlCommand selectCommand = new NpgsqlCommand())
+            {
+                try
+                {
+                    linhaSql = "SELECT  ";
+                    linhaSql += "Id_Venda, ";
+                    linhaSql += "Id_Cliente, ";
+                    linhaSql += "Data_Venda, ";
+                    linhaSql += "Valor_Total ";
+                    linhaSql += "FROM Venda ";
+                    linhaSql += "WHERE Id_Venda = @Id_Venda ";
+                    linhaSql += "Order by Id_Venda ";
+
+                    selectCommand.CommandText = linhaSql;
+
+                    selectCommand.Parameters.Add("@Id_Venda", NpgsqlTypes.NpgsqlDbType.Integer, 4, "Id_Venda").Value = id;
+
+                    factoryConnection.ExecuteQuery(selectCommand, dsVenda, "Venda");
+
+                    if(dsVenda.Tables["Venda"].Rows.Count > 0)
+                    {
+                        venda = new Venda
+                        {
+                            IdVenda = Convert.ToInt32(dsVenda.Tables["Venda"].Rows[0]["Id_Venda"]),
+                            IdCliente = Convert.ToInt32(dsVenda.Tables["Venda"].Rows[0]["Id_Cliente"]),
+                            DataVenda = Convert.ToDateTime(dsVenda.Tables["Venda"].Rows[0]["Data_Venda"]),
+                            ValorTotal = Convert.ToDecimal(dsVenda.Tables["Venda"].Rows[0]["Valor_Total"])
+                        };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+
+            return venda;
+        }
+
         public List<Produto> ObterListaDeProdutos()
         {
             string linhaSql = null;
@@ -67,53 +152,52 @@ namespace DeMaria.BLL
                 {
                     throw new Exception(ex.Message);
                 }
-
             }
         }
 
-        public List<Venda> ListarVendas()
+        public DataSet ObterItemVenda(int idVenda)
         {
-            string idCliente = null;
-            string linhaSql;
+            string linhaSqlServer = null;
+            DataSet dsItemVenda = new DataSet();
 
-            using (NpgsqlCommand selectCommand = new NpgsqlCommand())
+            try
             {
-                try
+                using (NpgsqlCommand selectCommand = new NpgsqlCommand())
                 {
-                    linhaSql = "SELECT  ";
-                    linhaSql += "Id_Venda, ";
-                    linhaSql += "Id_Cliente, ";
-                    linhaSql += "Data_Venda, ";
-                    linhaSql += "Valor_Total ";
-                    linhaSql += "FROM Venda ";
-                    linhaSql += "Order by Id_Venda ";
+                    linhaSqlServer = "SELECT ";
+                    linhaSqlServer += "itv.Id_Produto, ";
+                    linhaSqlServer += "prd.Nome, ";
+                    linhaSqlServer += "itv.Quantidade AS Estoque, ";
+                    linhaSqlServer += "CAST(FALSE AS BOOLEAN) AS Selecionar ";
+                    linhaSqlServer += "FROM itemvenda itv ";
+                    linhaSqlServer += "INNER JOIN Produto prd ON itv.Id_Produto = prd.Id_Produto ";
+                    linhaSqlServer += "WHERE itv.Id_Venda = @Id_Venda ";
 
-                    selectCommand.CommandText = linhaSql;
 
-                    return factoryConnection.ExecuteQueryList(selectCommand, reader => new Venda
-                    {
-                        IdVenda = Convert.ToInt32(reader["Id_Venda"]),
-                        IdCliente = Convert.ToInt32(reader["Id_Cliente"]),
-                        DataVenda = Convert.ToDateTime(reader["Data_Venda"]),
-                        ValorTotal = Convert.ToDecimal(reader["Valor_Total"])
-                    });
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
+                    selectCommand.CommandText = linhaSqlServer;
+                    //Id_Venda como parâmetros
+                    selectCommand.Parameters.Add("@Id_Venda", NpgsqlDbType.Integer, 4, "Id_Venda").Value = idVenda;
+
+                    factoryConnection.ExecuteQuery(selectCommand, dsItemVenda, "ItemVenda");
                 }
             }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return dsItemVenda;
         }
 
         public int RegistrarVenda(Venda venda, List<ItemVenda> itensVenda)
         {
             string linhaSql;
             string linhaSqlChild;
+            int idVenda = 0; 
             int linhasAfetadas = 0;
 
             using (NpgsqlCommand insertCommand = new NpgsqlCommand())
             {
-
                 try
                 {
                     linhaSql = "INSERT INTO Venda ";
@@ -121,24 +205,12 @@ namespace DeMaria.BLL
                     linhaSql += "Id_Cliente, ";
                     linhaSql += "Data_Venda, ";
                     linhaSql += "Valor_Total ";
-                    linhaSql += ")VALUES ";
+                    linhaSql += ") VALUES ";
                     linhaSql += "( ";
                     linhaSql += "@Id_Cliente, ";
                     linhaSql += "@Data_Venda, ";
                     linhaSql += "@Valor_Total ";
                     linhaSql += ") RETURNING Id_Venda ";
-
-                    linhaSqlChild = "INSERT INTO ItemVenda ";
-                    linhaSqlChild += "( ";
-                    linhaSqlChild += "Id_Venda, ";
-                    linhaSqlChild += "Id_Produto, ";
-                    linhaSqlChild += "Quantidade ";
-                    linhaSqlChild += ")VALUES ";
-                    linhaSqlChild += "( ";
-                    linhaSqlChild += "@ReturnId, ";
-                    linhaSqlChild += "@Id_Produto, ";
-                    linhaSqlChild += "@Quantidade ";
-                    linhaSqlChild += ") ";
 
                     insertCommand.CommandText = linhaSql;
 
@@ -146,16 +218,36 @@ namespace DeMaria.BLL
                     insertCommand.Parameters.AddWithValue("@Data_Venda", DateTime.Now);
                     insertCommand.Parameters.AddWithValue("@Valor_Total", venda.ValorTotal);
 
+                    idVenda = Convert.ToInt32(factoryConnection.ExecuteScalar(insertCommand));
+
+                    linhaSqlChild = "INSERT INTO ItemVenda ";
+                    linhaSqlChild += "( ";
+                    linhaSqlChild += "Id_Venda, ";
+                    linhaSqlChild += "Id_Produto, ";
+                    linhaSqlChild += "Quantidade ";
+                    linhaSqlChild += ") VALUES ";
+                    linhaSqlChild += "( ";
+                    linhaSqlChild += "@Id_Venda, ";
+                    linhaSqlChild += "@Id_Produto, ";
+                    linhaSqlChild += "@Quantidade ";
+                    linhaSqlChild += ") ";
+
+
                     foreach (var item in itensVenda)
                     {
-                        //insertCommand.Parameters.AddWithValue("@Id_Venda", item.IdVenda);
-                        insertCommand.Parameters.AddWithValue("@Id_Produto", item.IdProduto);
-                        insertCommand.Parameters.AddWithValue("@Quantidade", item.Quantidade);
+                        using (NpgsqlCommand insertItemCommand = new NpgsqlCommand())
+                        {
+                            insertItemCommand.CommandText = linhaSqlChild;
+
+                            insertItemCommand.Parameters.AddWithValue("@Id_Venda", idVenda);
+                            insertItemCommand.Parameters.AddWithValue("@Id_Produto", item.IdProduto);
+                            insertItemCommand.Parameters.AddWithValue("@Quantidade", item.Quantidade);
+
+                            linhasAfetadas += factoryConnection.ExecuteNonQuery(insertItemCommand);
+                        }
                     }
+                    return idVenda;
 
-                    factoryConnection.ExecuteNested(insertCommand, linhaSqlChild, linhasAfetadas);
-
-                    return linhasAfetadas;
                 }
                 catch (Exception ex)
                 {

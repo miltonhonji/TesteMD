@@ -68,6 +68,7 @@ namespace DeMaria.DAL
         #endregion Main
 
         #region Métodos para reuso
+
         //Métodos para Insert
         public void ExecuteInsert(NpgsqlCommand npgSqlCommand, int returnIdentity)
         {
@@ -98,7 +99,83 @@ namespace DeMaria.DAL
                 }
             }
         }
-       
+
+        public int ExecuteScalar(NpgsqlCommand sqlCommand)
+        {
+            AbrirBancoDeDados();
+
+            using (sqlCommand.Connection = conexao)
+            {
+                try
+                {
+                    return Convert.ToInt32(sqlCommand.ExecuteScalar());
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Erro ao executar o comando SQL", ex);
+                }
+                finally
+                {
+                    FecharBancoDeDados();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Método para executar comandos SQL que não retornam dados (como INSERT, UPDATE, DELETE).
+        /// </summary>
+        /// <param name="command">Comando SQL a ser executado.</param>
+        /// <returns>O número de linhas afetadas pela execução do comando.</returns>
+        public int ExecuteNonQuery(NpgsqlCommand command)
+        {
+            // Inicializa o número de linhas afetadas
+            int rowsAffected = 0;
+
+            // Abrindo a conexão
+            AbrirBancoDeDados();
+
+            using (command.Connection = conexao)
+            {
+                // Inicia a transação
+                command.Transaction = conexao.BeginTransaction();
+
+                try
+                {
+                    // Executa o comando e obtém o número de linhas afetadas
+                    rowsAffected = command.ExecuteNonQuery();
+
+                    // Efetiva a execução da transação
+                    command.Transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        // Desfaz os comandos em caso de erro
+                        command.Transaction.Rollback("SampleTransaction");
+                    }
+                    catch (NpgsqlException nsql)
+                    {
+                        if (command.Connection != null)
+                        {
+                            throw new Exception("An exception of type " + nsql.GetType() +
+                                " was encountered while attempting to roll back the transaction.");
+                        }
+                    }
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    // Libera os recursos do comando
+                    command.Dispose();
+                    // Fecha a conexão
+                    FecharBancoDeDados();
+                }
+            }
+
+            return rowsAffected;
+        }
+
         /// <summary>
         /// Método de Retorno Inteiro.
         /// Executa dois comandos aninhados em uma transação, sendo que o primeiro
@@ -108,15 +185,13 @@ namespace DeMaria.DAL
         {
             //Guardar o código gerado pelo primeiro comando
             int returnRow = 0;
-            //Inicializa o valor
-            returnAffectedRows = 0;
             //Abrindo a conexão
             AbrirBancoDeDados();
 
             using (mainCommand.Connection = conexao)
             {
                 //Inicia a transação
-                mainCommand.Transaction = conexao.BeginTransaction(IsolationLevel.ReadCommitted);
+                mainCommand.Transaction = conexao.BeginTransaction();
 
                 try
                 {

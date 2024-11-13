@@ -338,6 +338,7 @@
             this.btnNovo.TabIndex = 14;
             this.btnNovo.Text = "Novo";
             this.btnNovo.UseVisualStyleBackColor = true;
+            this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
             // 
             // btnGravar
             // 
@@ -380,6 +381,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmVendaDeProdutos";
             this.Text = "Venda de Produtos";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.grpInformacoesDoCliente.ResumeLayout(false);
             this.grpInformacoesDoCliente.PerformLayout();
             this.grpProduto.ResumeLayout(false);

@@ -41,26 +41,67 @@ namespace DeMaria.BLL
 
             using (NpgsqlCommand selectCommand = new NpgsqlCommand())
             {
-                linhaSql = "SELECT ";
-                linhaSql += "id_produto, ";
-                linhaSql += "CAST(FALSE AS BOOLEAN) AS 'Selecionar', ";
-                linhaSql += "nome, ";
-                linhaSql += "preco, ";
-                linhaSql += "Estoque ";
-                linhaSql += "FROM produto ";
-                linhaSql += "ORDER BY Id_Produto ";
-
-                selectCommand.CommandText = linhaSql;
-
-                return factoryConnection.ExecuteQueryList(selectCommand, reader => new Produto
+                try
                 {
-                    Id = Convert.ToInt32(reader["Id_Produto"]),
-                    Nome = Convert.ToString(reader["Nome"]),
-                    Descricao = Convert.ToString(reader["Descricao"]),
-                    Preco = Convert.ToDecimal(reader["Preco"]),
-                    Estoque = Convert.ToInt32(reader["Estoque"])
-                });
+                    linhaSql = "SELECT ";
+                    linhaSql += "id_produto, ";
+                    linhaSql += "CAST(FALSE AS BOOLEAN) AS 'Selecionar', ";
+                    linhaSql += "nome, ";
+                    linhaSql += "preco, ";
+                    linhaSql += "Estoque ";
+                    linhaSql += "FROM produto ";
+                    linhaSql += "ORDER BY Id_Produto ";
 
+                    selectCommand.CommandText = linhaSql;
+
+                    return factoryConnection.ExecuteQueryList(selectCommand, reader => new Produto
+                    {
+                        Id = Convert.ToInt32(reader["Id_Produto"]),
+                        Nome = Convert.ToString(reader["Nome"]),
+                        Descricao = Convert.ToString(reader["Descricao"]),
+                        Preco = Convert.ToDecimal(reader["Preco"]),
+                        Estoque = Convert.ToInt32(reader["Estoque"])
+                    });
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+
+            }
+        }
+
+        public List<Venda> ListarVendas()
+        {
+            string idCliente = null;
+            string linhaSql;
+
+            using (NpgsqlCommand selectCommand = new NpgsqlCommand())
+            {
+                try
+                {
+                    linhaSql = "SELECT  ";
+                    linhaSql += "Id_Venda, ";
+                    linhaSql += "Id_Cliente, ";
+                    linhaSql += "Data_Venda, ";
+                    linhaSql += "Valor_Total ";
+                    linhaSql += "FROM Venda ";
+                    linhaSql += "Order by Id_Venda ";
+
+                    selectCommand.CommandText = linhaSql;
+
+                    return factoryConnection.ExecuteQueryList(selectCommand, reader => new Venda
+                    {
+                        IdVenda = Convert.ToInt32(reader["Id_Venda"]),
+                        IdCliente = Convert.ToInt32(reader["Id_Cliente"]),
+                        DataVenda = Convert.ToDateTime(reader["Data_Venda"]),
+                        ValorTotal = Convert.ToDecimal(reader["Valor_Total"])
+                    });
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
             }
         }
 

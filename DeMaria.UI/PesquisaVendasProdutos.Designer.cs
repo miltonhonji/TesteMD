@@ -33,8 +33,8 @@
             this.btnNovo = new System.Windows.Forms.Button();
             this.btnSelecionar = new System.Windows.Forms.Button();
             this.btnSair = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.dgvListaDeVendas = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvListaDeVendas)).BeginInit();
             this.SuspendLayout();
             // 
             // cboCliente
@@ -85,20 +85,20 @@
             this.btnSair.UseVisualStyleBackColor = true;
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
             // 
-            // dataGridView1
+            // dgvListaDeVendas
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(25, 105);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(539, 267);
-            this.dataGridView1.TabIndex = 11;
+            this.dgvListaDeVendas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvListaDeVendas.Location = new System.Drawing.Point(25, 105);
+            this.dgvListaDeVendas.Name = "dgvListaDeVendas";
+            this.dgvListaDeVendas.Size = new System.Drawing.Size(539, 267);
+            this.dgvListaDeVendas.TabIndex = 11;
             // 
             // frmPesquisaVendasProdutos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1080, 612);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvListaDeVendas);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.btnSelecionar);
             this.Controls.Add(this.btnNovo);
@@ -108,7 +108,7 @@
             this.Name = "frmPesquisaVendasProdutos";
             this.Text = "PesquisaVendasProdutos";
             this.Load += new System.EventHandler(this.frmPesquisaVendasProdutos_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvListaDeVendas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -120,6 +120,6 @@
         private System.Windows.Forms.Button btnNovo;
         private System.Windows.Forms.Button btnSelecionar;
         private System.Windows.Forms.Button btnSair;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvListaDeVendas;
     }
 }

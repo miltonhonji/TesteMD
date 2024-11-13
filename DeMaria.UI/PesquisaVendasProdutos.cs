@@ -39,6 +39,7 @@ namespace DeMaria.UI
         private void frmPesquisaVendasProdutos_Load(object sender, EventArgs e)
         {
             CarregarComboBox();
+            CarregarListaDeVendas();
         }
 
         //Carregar a Lista Suspensa para escolher o cliente
@@ -56,6 +57,37 @@ namespace DeMaria.UI
             cboCliente.DisplayMember = "Nome";
             cboCliente.ValueMember = "Id";
 
+        }
+
+        private void CarregarListaDeVendas()
+        {
+            //Instanciar as classes do VendaRepository e a DTO.Venda
+            VendaRepository vendaRepository = new VendaRepository();
+            Venda venda = new Venda();
+
+            try
+            {
+                //Lista de cliente, aonde os dados serão obtidos pela lista da classe VendaRepository
+                List<Venda> listaDeVendas = vendaRepository.ListarVendas();
+
+                //Gerar as colunas manualmente
+                dgvListaDeVendas.AutoGenerateColumns = false;
+
+                //Após isso, limpar a grid, para receber os campos referentes as vendas
+                dgvListaDeVendas.Columns.Clear();
+
+                //Os nomes das colunas no datagridView
+                dgvListaDeVendas.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id_Venda", HeaderText = "Id_Venda", Visible = false });
+                dgvListaDeVendas.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id_Cliente", HeaderText = "Id_Cliente", Visible = false });
+                dgvListaDeVendas.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Data_Venda", HeaderText = "Data_Venda" });
+                dgvListaDeVendas.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Valor_Total", HeaderText = "Valor_Total" });
+
+                dgvListaDeVendas.DataSource = listaDeVendas;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         private void btnNovo_Click(object sender, EventArgs e)

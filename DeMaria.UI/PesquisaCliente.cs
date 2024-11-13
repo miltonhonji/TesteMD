@@ -82,7 +82,6 @@ namespace DeMaria.UI
             {
                 throw new Exception(ex.Message);
             }
-
         }
 
         private void btnSair_Click(object sender, EventArgs e)

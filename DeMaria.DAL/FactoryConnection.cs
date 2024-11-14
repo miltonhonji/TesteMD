@@ -177,75 +177,65 @@ namespace DeMaria.DAL
         }
 
         /// <summary>
-        /// Método de Retorno Inteiro.
-        /// Executa dois comandos aninhados em uma transação, sendo que o primeiro
-        /// poderá retornar um int para ser utilizado no segundo.
+        /// Método para executar múltiplos comandos
         /// </summary>
-        public void ExecuteNested(NpgsqlCommand mainCommand, string childCommmand, int returnAffectedRows)
+        /// <param name="sqlCommand"></param>
+        /// <param name="returnDataSet"></param>
+        /// <param name="nameTableDataSet"></param>
+       public int ExecuteNonQuery(List<NpgsqlCommand> commands)
         {
-            //Guardar o código gerado pelo primeiro comando
-            int returnRow = 0;
-            //Abrindo a conexão
+            //Aqui iremos colocar o total de linha afetadas
+            int affectedRows = 0;
+            //Abrir o banco de dados
             AbrirBancoDeDados();
 
-            using (mainCommand.Connection = conexao)
+            //Inicia transação
+            using (var transaction = conexao.BeginTransaction())
             {
-                //Inicia a transação
-                mainCommand.Transaction = conexao.BeginTransaction();
-
                 try
                 {
-                    //Variável returnRow para receber o ExecuteScalar
-                    returnRow = Convert.ToInt32(mainCommand.ExecuteScalar());
-
-                    //Monta o próximo comando com a string do segundo comando sql. Isso ocorre porque apenas
-                    //o primeiro comando possui o controle de transação
-                    mainCommand.CommandText = childCommmand;
-
-                    //Quando o segundo comando precisar utilizar um código gerado pelo primeiro
-                    //ele pode ser passado como parâmetro
-                    if (returnRow != 0)
-                    { 
-                        mainCommand.Parameters.AddWithValue("@ReturnId", returnRow);
-                    }
-
-                    //Executa o segundo comando
-                    returnAffectedRows = mainCommand.ExecuteNonQuery();
-
-                    if(returnRow != 0 && returnAffectedRows != 0)
+                    //Laço for para cada comando da lista
+                    foreach(var command in commands)
                     {
-                        returnAffectedRows = returnRow;
-                    }
+                        //Cada comando receberá a conexão
+                        command.Connection = conexao;
+                        command.Transaction = transaction;
 
-                    //Efetiva a execução dos dois comandos
-                    mainCommand.Transaction.Commit();
+                        //Total de linhas afetadas e soma quantidade de linhas afetadas
+                        affectedRows += command.ExecuteNonQuery();
+                    }
+                    //Efetiva a tranação 
+                    transaction.Commit();
+
                 }
                 catch (Exception ex)
                 {
                     try
-                    {                   
-                        // Desfaz os comandos em caso de erro
-                        mainCommand.Transaction.Rollback("SampleTransaction");
-
+                    {
+                        //Desfaz os comandos caso aconteça erros
+                        transaction.Rollback();
                     }
                     catch (NpgsqlException nsql)
                     {
-                        if(mainCommand.Connection != null)
-                        {
-                            throw new Exception("An exception of type " + nsql.GetType() +
-                            " was encountered while attempting to roll back the transaction.");
-                        }
+                        throw new Exception(nsql.Message);
                     }
-                    throw new Exception(ex.Message);
                 }
                 finally
                 {
-                    mainCommand.Dispose();
+                    //Libera os comandos
+                    foreach (var command in commands)
+                    {
+                        command.Dispose();
+                    }
+                    //Fecha do banco de dados
                     FecharBancoDeDados();
                 }
             }
+
+            //Retorna as linhas afetadas
+            return affectedRows;
         }
-       
+
         //Métodos para Obter os valores
         public void ExecuteQuery(NpgsqlCommand sqlCommand, DataSet returnDataSet, string nameTableDataSet)
         {
@@ -268,6 +258,10 @@ namespace DeMaria.DAL
                     catch (Exception ex)
                     {
                         throw new Exception(ex.Message);
+                    }
+                    finally
+                    {
+                        FecharBancoDeDados();
                     }
                 }
             }

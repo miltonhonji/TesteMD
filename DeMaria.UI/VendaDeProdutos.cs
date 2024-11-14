@@ -28,21 +28,22 @@ namespace DeMaria.UI
             idCliente = clienteId;
             idVenda = vendaId;
 
-            if(vendaId == 0)
+            CarregarDataGridView();
+
+            if (vendaId == 0)
             {
-                CarregaCliente();
+                ObterCliente();
             }
             else
             {
-                CarregarVendaJaEfetuada();
-                CarregarItensVendas(idVenda);
+                //Obtém as  as informações de venda e de item de venda.
+                ObterVendas();
+                //ObterItemVenda(idVenda);
             }
-            //CarregaCliente();
-            CarregarDataGridView();
         }
 
-        //Fazer um método para carregar os nomes dos clientes
-        private void CarregaCliente()
+        //Fazer um método para obter os nomes dos clientes
+        private void ObterCliente()
         {
             //Primeiro iremos instanciar as classes e as DTOS do cliente para mostrar nos campos abaixo
             ClienteRepository clienteRepository = new ClienteRepository();
@@ -76,12 +77,56 @@ namespace DeMaria.UI
             }
         }
 
-        private void CarregarItensVendas(int idVenda)
+        private void ObterVendas()
+        {
+            //Instacias da classes VendaRepository e Venda
+            VendaRepository vendaRepository = new VendaRepository();
+            Venda venda = vendaRepository.Obter(idVenda);
+            //Dataset para o datagridview
+            DataSet dsItemVenda = vendaRepository.ObterItemVenda(idVenda);
+            //Variável para indicar a quantidadeTotal (que estava salvo na última gravação).
+            int quantidadeTotal = 0;
+
+            if (venda != null)
+            {
+                idCliente = venda.IdCliente;
+
+                if ((venda.IdCliente != 0) && (venda.IdVenda !=0))
+                {
+                    ObterCliente();
+
+                    dtpDataDeVenda.Value = Convert.ToDateTime(venda.DataVenda);
+                    txtValorTotal.Text = Convert.ToDecimal(venda.ValorTotal).ToString();
+
+                    dtpDataDeVenda.Enabled = false;
+                    txtValorTotal.Enabled = false;
+
+                    //Configura o datasource
+                    dgvProdutosEscolhidos.DataSource = dsItemVenda.Tables["ItemVenda"];
+
+                    //Deixando algumas colunas ocultas
+                    dgvProdutosEscolhidos.Columns["Id_Produto"].Visible = false;
+
+                    //Percorre todas as  linhas da tabela e soma com valor da coluna do estoque
+                    foreach (DataRow linha in dsItemVenda.Tables["ItemVenda"].Rows)
+                    {
+                        //Quantidade total recebedno o valor da linha do estoque
+                        quantidadeTotal += Convert.ToInt32(linha["Estoque"]);
+                    }
+                    //O textbox recebe o valor da quantidade Total
+                    txtQuantidadeItens.Text = quantidadeTotal.ToString();
+                }
+            }
+        }
+
+        private void ObterItemVenda(int idVenda)
         {
             //Instacias da classes VendaRepository e Venda
             VendaRepository vendaRepository = new VendaRepository();
             //Dataset para o datagridview
             DataSet dsItemVenda = vendaRepository.ObterItemVenda(idVenda);
+            //Variável para indicar a quantidadeTotal (que estava salvo na última gravação).
+            int quantidadeTotal = 0;
 
             //Configura o datasource
             dgvProdutosEscolhidos.DataSource = dsItemVenda.Tables["ItemVenda"];
@@ -94,36 +139,17 @@ namespace DeMaria.UI
                 dgvProdutosEscolhidos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Nome", HeaderText = "Nome" });
                 dgvProdutosEscolhidos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Preco", HeaderText = "Preco" });
                 dgvProdutosEscolhidos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Estoque", HeaderText = "Quantidade" });
-                dgvProdutosEscolhidos.Columns.Add(new DataGridViewCheckBoxColumn { DataPropertyName = "Deletar", HeaderText = "Deletar" });
             }
-        }
 
-        private void CarregarVendaJaEfetuada()
-        {
-            //Instacias da classes VendaRepository e Venda
-            VendaRepository vendaRepository = new VendaRepository();
-            Venda venda = vendaRepository.Obter(idVenda);
-            //Dataset para o datagridview
-            DataSet dsItemVenda = vendaRepository.ObterItemVenda(idVenda);
-
-            if (venda != null)
+            //Percorre todas as  linhas da tabela e soma com valor da coluna do estoque
+            foreach(DataRow linha in dsItemVenda.Tables["ItemVenda"].Rows)
             {
-                idCliente = venda.IdCliente;
-                //idVenda = venda.IdVenda;
-
-                if ((venda.IdCliente != 0) && (venda.IdVenda !=0))
-                {
-                    CarregaCliente();
-
-                    dtpDataDeVenda.Value = Convert.ToDateTime(venda.DataVenda);
-                    txtValorTotal.Text = Convert.ToDecimal(venda.ValorTotal).ToString();
-
-                    dtpDataDeVenda.Enabled = false;
-                    txtValorTotal.Enabled = false;
-                }
+                //Quantidade total recebedno o valor da linha do estoque
+                quantidadeTotal += Convert.ToInt32(linha["Estoque"]);
             }
+            //O textbox recebe o valor da quantidade Total
+            txtQuantidadeItens.Text = quantidadeTotal.ToString();
         }
-
 
         private void CarregarDataGridView()
         {
@@ -288,7 +314,7 @@ namespace DeMaria.UI
                 //Adiciona os produtos do datagrid view
                 foreach (DataGridViewRow linha in dgvProdutosEscolhidos.Rows)
                 {
-                    if(Convert.ToBoolean(linha.Cells[5].Value))
+                    if(Convert.ToBoolean(linha.Cells[5].Value) == true)
                     {
                         //Instanciando a classe ItemVenda para adcionar a lista de Item de Venda
                         ItemVenda itemVenda = new ItemVenda
@@ -304,15 +330,25 @@ namespace DeMaria.UI
 
                 if (itensVenda.Count > 0)
                 {
-                    idVenda = vendaRepository.RegistrarVenda(venda, itensVenda);
-                    MessageBox.Show("Venda Registrada com sucesso!", "De Maria", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if(idVenda == 0)
+                    {
+                        idVenda = vendaRepository.RegistrarVenda(venda, itensVenda);
+                        MessageBox.Show("Venda Registrada com sucesso!", "De Maria", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        venda.IdVenda = idVenda;
+                        //Chamando o método para atualizar a venda
+                        vendaRepository.AtualizarVenda(venda, itensVenda);
+                        MessageBox.Show("Venda Atualizada com sucesso!", "De Maria", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    }
                     LimparCampos();
                 }
                 else
                 {
                     MessageBox.Show("Erro ao registrar venda.", "De Maria", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
             }
             catch (Exception ex)
             {
@@ -337,7 +373,7 @@ namespace DeMaria.UI
                 foreach (DataGridViewRow linha in dgvProdutosEscolhidos.Rows)
                 {
                     //Faz a verificação da linha se o produto está ticado deletado
-                    if(Convert.ToBoolean(linha.Cells[4].Value) == true)
+                    if(Convert.ToBoolean(linha.Cells[3].Value) == true)
                     {
                         //Adiciona o id para a remoção
                         idProduto = Convert.ToInt32(linha.Cells[0].Value);
@@ -352,7 +388,7 @@ namespace DeMaria.UI
 
                 //Atualiza o datasource
                 dgvProdutosEscolhidos.DataSource = null;
-                dgvProdutosEscolhidos.DataSource = produtosSelecionados;
+                //dgvProdutosEscolhidos.DataSource = produtosSelecionados;
 
                 //Atualiza os valores
                 AtualizarValorTotal();

@@ -137,6 +137,12 @@
     <Compile Include="PesquisaVendasProdutos.Designer.cs">
       <DependentUpon>PesquisaVendasProdutos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Relatorio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorio.Designer.cs">
+      <DependentUpon>Relatorio.cs</DependentUpon>
+    </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="VendaDeProdutos.cs">
       <SubType>Form</SubType>
@@ -169,6 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PesquisaVendasProdutos.resx">
       <DependentUpon>PesquisaVendasProdutos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorio.resx">
+      <DependentUpon>Relatorio.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Testes.rdlc" />
     <EmbeddedResource Include="VendaDeProdutos.resx">

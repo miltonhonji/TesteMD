@@ -30,6 +30,65 @@ namespace DeMaria.BLL
             factoryConnection = FactoryConnection.Instancia;
         }
 
+        //Método para AtualizarVendas
+        public int AtualizarVenda(Venda venda, List<ItemVenda> itensDaVenda)
+        {
+            string linhaSql;
+            string linhaSqlItem;
+            //Comandos instanciando a uma lista de comandos Postgre
+            var commandos = new List<NpgsqlCommand>();
+
+            try
+            {
+                using (NpgsqlCommand updateCommand = new NpgsqlCommand())
+                {
+                    linhaSql = "UPDATE Venda SET ";
+                    linhaSql += "Id_Cliente = @Id_Cliente, ";
+                    linhaSql += "Data_Venda = @Data_Venda, ";
+                    linhaSql += "Valor_Total = @Valor_Total ";
+                    linhaSql += "WHERE Id_Venda = @Id_Venda ";
+
+                    updateCommand.CommandText = linhaSql;
+
+                    //Valores e parâmetros
+                    updateCommand.Parameters.AddWithValue("@Id_Cliente", venda.IdCliente);
+                    updateCommand.Parameters.AddWithValue("@Data_Venda", venda.DataVenda);
+                    updateCommand.Parameters.AddWithValue("@Valor_Total", venda.ValorTotal);
+                    updateCommand.Parameters.AddWithValue("@Id_Venda", venda.IdVenda);
+                    commandos.Add(updateCommand);
+                }
+
+                foreach (var item in itensDaVenda)
+                {
+                    using (NpgsqlCommand updateCommandItemVenda = new NpgsqlCommand())
+                    {
+                        linhaSqlItem = "UPDATE ItemVenda SET ";
+                        linhaSqlItem += "Quantidade = @Quantidade ";
+                        linhaSqlItem += "WHERE Id_Venda = @Id_Venda ";
+                        linhaSqlItem += "AND Id_Produto = @Id_Produto ";
+
+                        //CommandText
+                        updateCommandItemVenda.CommandText = linhaSqlItem;
+
+                        //Valores e parâmetros
+                        updateCommandItemVenda.Parameters.AddWithValue("@Quantidade", item.Quantidade);
+                        updateCommandItemVenda.Parameters.AddWithValue("@Id_Venda", item.IdVenda);
+                        updateCommandItemVenda.Parameters.AddWithValue("@Id_Produto", item.IdProduto);
+
+                        //Comando para adicionar o segundo comando
+                        commandos.Add(updateCommandItemVenda);
+                    }
+                }
+
+                // Chama o método de reuso na camada DAL para executar todos os comandos
+                return factoryConnection.ExecuteNonQuery(commandos);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public void Dispose()
         {
             throw new NotImplementedException();
@@ -129,10 +188,10 @@ namespace DeMaria.BLL
                 try
                 {
                     linhaSql = "SELECT ";
-                    linhaSql += "id_produto, ";
+                    linhaSql += "Id_produto, ";
                     linhaSql += "CAST(FALSE AS BOOLEAN) AS 'Selecionar', ";
-                    linhaSql += "nome, ";
-                    linhaSql += "preco, ";
+                    linhaSql += "Nome, ";
+                    linhaSql += "Preco, ";
                     linhaSql += "Estoque ";
                     linhaSql += "FROM produto ";
                     linhaSql += "ORDER BY Id_Produto ";
@@ -165,7 +224,7 @@ namespace DeMaria.BLL
                 using (NpgsqlCommand selectCommand = new NpgsqlCommand())
                 {
                     linhaSqlServer = "SELECT ";
-                    linhaSqlServer += "itv.Id_Produto, ";
+                    linhaSqlServer += "itv.Id_Produto AS id_Produto, ";
                     linhaSqlServer += "prd.Nome, ";
                     linhaSqlServer += "itv.Quantidade AS Estoque, ";
                     linhaSqlServer += "CAST(FALSE AS BOOLEAN) AS Selecionar ";

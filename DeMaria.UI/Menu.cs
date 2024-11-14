@@ -87,5 +87,9 @@ namespace DeMaria.UI
             }
         }
 
+        private void btnSair_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

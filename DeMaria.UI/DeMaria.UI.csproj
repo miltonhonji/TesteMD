@@ -143,6 +143,11 @@
     <Compile Include="Relatorio.Designer.cs">
       <DependentUpon>Relatorio.cs</DependentUpon>
     </Compile>
+    <Compile Include="Relatorio1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Relatorio.xsd</DependentUpon>
+    </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="VendaDeProdutos.cs">
       <SubType>Form</SubType>
@@ -179,6 +184,8 @@
     <EmbeddedResource Include="Relatorio.resx">
       <DependentUpon>Relatorio.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\RelatorioCliente.rdlc" />
+    <EmbeddedResource Include="Reports\RelatorioProduto.rdlc" />
     <EmbeddedResource Include="Reports\Testes.rdlc" />
     <EmbeddedResource Include="VendaDeProdutos.resx">
       <DependentUpon>VendaDeProdutos.cs</DependentUpon>
@@ -208,6 +215,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Relatorio.xsc">
+      <DependentUpon>Relatorio.xsd</DependentUpon>
+    </None>
+    <None Include="Relatorio.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Relatorio1.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Relatorio.xss">
+      <DependentUpon>Relatorio.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

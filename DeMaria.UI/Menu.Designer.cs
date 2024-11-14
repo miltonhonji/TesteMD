@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.pnlOpcoesMenu = new System.Windows.Forms.Panel();
+            this.btnSair = new System.Windows.Forms.Button();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.btnCadastroDeVendas = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnCadastroDeProdutos = new System.Windows.Forms.Button();
@@ -41,6 +43,8 @@
             // 
             // pnlOpcoesMenu
             // 
+            this.pnlOpcoesMenu.Controls.Add(this.btnSair);
+            this.pnlOpcoesMenu.Controls.Add(this.panel4);
             this.pnlOpcoesMenu.Controls.Add(this.btnCadastroDeVendas);
             this.pnlOpcoesMenu.Controls.Add(this.panel3);
             this.pnlOpcoesMenu.Controls.Add(this.btnCadastroDeProdutos);
@@ -51,6 +55,23 @@
             this.pnlOpcoesMenu.Name = "pnlOpcoesMenu";
             this.pnlOpcoesMenu.Size = new System.Drawing.Size(256, 611);
             this.pnlOpcoesMenu.TabIndex = 0;
+            // 
+            // btnSair
+            // 
+            this.btnSair.Location = new System.Drawing.Point(10, 365);
+            this.btnSair.Name = "btnSair";
+            this.btnSair.Size = new System.Drawing.Size(246, 48);
+            this.btnSair.TabIndex = 6;
+            this.btnSair.Text = "Sair ";
+            this.btnSair.UseVisualStyleBackColor = true;
+            this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
+            // 
+            // panel4
+            // 
+            this.panel4.Location = new System.Drawing.Point(1, 365);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(14, 48);
+            this.panel4.TabIndex = 7;
             // 
             // btnCadastroDeVendas
             // 
@@ -135,5 +156,7 @@
         private System.Windows.Forms.Button btnCadastroDeClientes;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel pnlFormulario;
+        private System.Windows.Forms.Button btnSair;
+        private System.Windows.Forms.Panel panel4;
     }
 }

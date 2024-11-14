@@ -152,5 +152,11 @@ namespace DeMaria.UI
         {
             this.Close();
         }
+
+        private void btnGerarRelatorio_Click(object sender, EventArgs e)
+        {
+            frmRelatorio relatorioProduto = new frmRelatorio(idProduto);
+            relatorioProduto.ShowDialog();
+        }
     }
 }

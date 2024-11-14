@@ -28,32 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.rpvRelatorio = new Microsoft.Reporting.WinForms.ReportViewer();
             this.SuspendLayout();
             // 
-            // reportViewer1
+            // rpvRelatorio
             // 
-            this.reportViewer1.Location = new System.Drawing.Point(1, 0);
-            this.reportViewer1.Name = "reportViewer1";
-            this.reportViewer1.ServerReport.BearerToken = null;
-            this.reportViewer1.Size = new System.Drawing.Size(801, 446);
-            this.reportViewer1.TabIndex = 0;
+            this.rpvRelatorio.Location = new System.Drawing.Point(1, 1);
+            this.rpvRelatorio.Name = "rpvRelatorio";
+            this.rpvRelatorio.ServerReport.BearerToken = null;
+            this.rpvRelatorio.Size = new System.Drawing.Size(1064, 574);
+            this.rpvRelatorio.TabIndex = 0;
             // 
             // frmRelatorio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.reportViewer1);
+            this.ClientSize = new System.Drawing.Size(1064, 573);
+            this.Controls.Add(this.rpvRelatorio);
             this.Name = "frmRelatorio";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Relatorio";
-            this.Load += new System.EventHandler(this.Relatorio_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
+        private Microsoft.Reporting.WinForms.ReportViewer rpvRelatorio;
     }
 }

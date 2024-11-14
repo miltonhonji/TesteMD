@@ -35,8 +35,9 @@ namespace DeMaria.BLL
         {
             string linhaSql;
             string linhaSqlItem;
+            string linhaSqlInsertIntem;
             //Comandos instanciando a uma lista de comandos Postgre
-            var commandos = new List<NpgsqlCommand>();
+            var comandos = new List<NpgsqlCommand>();
 
             try
             {
@@ -55,33 +56,64 @@ namespace DeMaria.BLL
                     updateCommand.Parameters.AddWithValue("@Data_Venda", venda.DataVenda);
                     updateCommand.Parameters.AddWithValue("@Valor_Total", venda.ValorTotal);
                     updateCommand.Parameters.AddWithValue("@Id_Venda", venda.IdVenda);
-                    commandos.Add(updateCommand);
+                    comandos.Add(updateCommand);
                 }
 
                 foreach (var item in itensDaVenda)
                 {
-                    using (NpgsqlCommand updateCommandItemVenda = new NpgsqlCommand())
+                    if(item.IdItemVenda > 0)
                     {
-                        linhaSqlItem = "UPDATE ItemVenda SET ";
-                        linhaSqlItem += "Quantidade = @Quantidade ";
-                        linhaSqlItem += "WHERE Id_Venda = @Id_Venda ";
-                        linhaSqlItem += "AND Id_Produto = @Id_Produto ";
+                        using (NpgsqlCommand updateCommandItemVenda = new NpgsqlCommand())
+                        {
+                            linhaSqlItem = "UPDATE ItemVenda SET ";
+                            linhaSqlItem += "Id_Venda = @Id_Venda, ";
+                            linhaSqlItem += "Id_Produto = @Id_Produto, ";
+                            linhaSqlItem += "Quantidade = @Quantidade, ";
+                            linhaSqlItem += "WHERE Id_Item_Venda = @Id_Item_Venda ";
 
-                        //CommandText
-                        updateCommandItemVenda.CommandText = linhaSqlItem;
+                            //CommandText
+                            updateCommandItemVenda.CommandText = linhaSqlItem;
 
-                        //Valores e parâmetros
-                        updateCommandItemVenda.Parameters.AddWithValue("@Quantidade", item.Quantidade);
-                        updateCommandItemVenda.Parameters.AddWithValue("@Id_Venda", item.IdVenda);
-                        updateCommandItemVenda.Parameters.AddWithValue("@Id_Produto", item.IdProduto);
+                            //Valores e parâmetros
+                            updateCommandItemVenda.Parameters.AddWithValue("@Id_Venda", item.IdVenda);
+                            updateCommandItemVenda.Parameters.AddWithValue("@Id_Produto", item.IdProduto);
+                            updateCommandItemVenda.Parameters.AddWithValue("@Quantidade", item.Quantidade);
+                            updateCommandItemVenda.Parameters.AddWithValue("@Id_Item_Venda", item.IdItemVenda);
 
-                        //Comando para adicionar o segundo comando
-                        commandos.Add(updateCommandItemVenda);
+                            //Comando para adicionar o segundo comando
+                            comandos.Add(updateCommandItemVenda);
+                        }
+                    }
+                    else
+                    {
+                        using (NpgsqlCommand insertCommand = new NpgsqlCommand())
+                        {
+                            linhaSqlInsertIntem = "INSERT INTO ItemVenda ";
+                            linhaSqlInsertIntem += "( ";
+                            linhaSqlInsertIntem += "Id_Venda, ";
+                            linhaSqlInsertIntem += "Id_Produto, ";
+                            linhaSqlInsertIntem += "Quantidade ";
+                            linhaSqlInsertIntem += ") VALUES ";
+                            linhaSqlInsertIntem += "( ";
+                            linhaSqlInsertIntem += "@Id_Venda, ";
+                            linhaSqlInsertIntem += "@Id_Produto, ";
+                            linhaSqlInsertIntem += "@Quantidade ";
+                            linhaSqlInsertIntem += ") ";
+
+                            insertCommand.CommandText = linhaSqlInsertIntem;
+
+                            insertCommand.Parameters.AddWithValue("@Id_Venda", venda.IdVenda);
+                            insertCommand.Parameters.AddWithValue("@Id_Produto", item.IdProduto);
+                            insertCommand.Parameters.AddWithValue("@Quantidade", item.Quantidade);
+
+                            //comandos para adicionar o produto
+                            comandos.Add(insertCommand);
+                        }
                     }
                 }
 
                 // Chama o método de reuso na camada DAL para executar todos os comandos
-                return factoryConnection.ExecuteNonQuery(commandos);
+                return factoryConnection.ExecuteNonQuery(comandos);
             }
             catch (Exception ex)
             {
@@ -91,7 +123,11 @@ namespace DeMaria.BLL
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(true);
+            //Tarefa da fila é finalizado para
+            //previnir a finalização do código para este objeto 
+            //executando um segundo tempo.
+            GC.SuppressFinalize(this);
         }
 
         public List<Venda> ListarVendas(int idCliente)
@@ -312,6 +348,26 @@ namespace DeMaria.BLL
                 {
                     throw new Exception(ex.Message);
                 }
+            }
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            //Checa se o dispose já foi chamado
+            if (this.disposed)
+            {
+                //Se ok, fecha todos os recursos que não são utilizados
+                if (disposing)
+                {
+                    //Liberando recursos gerenciados
+                    if (component != null)
+                        component.Dispose();
+
+                    //Lança os recursos não gerenciáveis. Se o descarte é falso,
+                    //apenas o seguinte código é executado
+                    handle = IntPtr.Zero;
+                }
+                disposed = true;
             }
         }
     }

@@ -40,13 +40,14 @@
             this.lblPreco = new System.Windows.Forms.Label();
             this.txtEstoque = new System.Windows.Forms.TextBox();
             this.lblQuantidadeNoEstoque = new System.Windows.Forms.Label();
+            this.btnGerarRelatorio = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtNome
             // 
             this.txtNome.Location = new System.Drawing.Point(40, 41);
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(483, 20);
+            this.txtNome.Size = new System.Drawing.Size(511, 20);
             this.txtNome.TabIndex = 1;
             // 
             // lblNome
@@ -61,7 +62,7 @@
             // btnDeletar
             // 
             this.btnDeletar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDeletar.Location = new System.Drawing.Point(293, 225);
+            this.btnDeletar.Location = new System.Drawing.Point(247, 225);
             this.btnDeletar.Name = "btnDeletar";
             this.btnDeletar.Size = new System.Drawing.Size(97, 50);
             this.btnDeletar.TabIndex = 11;
@@ -72,7 +73,7 @@
             // btnSair
             // 
             this.btnSair.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSair.Location = new System.Drawing.Point(430, 225);
+            this.btnSair.Location = new System.Drawing.Point(458, 225);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(93, 50);
             this.btnSair.TabIndex = 12;
@@ -83,7 +84,7 @@
             // btnGravar
             // 
             this.btnGravar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGravar.Location = new System.Drawing.Point(166, 225);
+            this.btnGravar.Location = new System.Drawing.Point(144, 225);
             this.btnGravar.Name = "btnGravar";
             this.btnGravar.Size = new System.Drawing.Size(97, 50);
             this.btnGravar.TabIndex = 10;
@@ -107,7 +108,7 @@
             this.txtDescricao.Location = new System.Drawing.Point(40, 92);
             this.txtDescricao.Multiline = true;
             this.txtDescricao.Name = "txtDescricao";
-            this.txtDescricao.Size = new System.Drawing.Size(483, 47);
+            this.txtDescricao.Size = new System.Drawing.Size(511, 47);
             this.txtDescricao.TabIndex = 4;
             // 
             // lblDescricao
@@ -137,7 +138,7 @@
             // 
             // txtEstoque
             // 
-            this.txtEstoque.Location = new System.Drawing.Point(394, 167);
+            this.txtEstoque.Location = new System.Drawing.Point(423, 167);
             this.txtEstoque.Name = "txtEstoque";
             this.txtEstoque.Size = new System.Drawing.Size(128, 20);
             this.txtEstoque.TabIndex = 8;
@@ -145,17 +146,29 @@
             // lblQuantidadeNoEstoque
             // 
             this.lblQuantidadeNoEstoque.AutoSize = true;
-            this.lblQuantidadeNoEstoque.Location = new System.Drawing.Point(391, 151);
+            this.lblQuantidadeNoEstoque.Location = new System.Drawing.Point(424, 151);
             this.lblQuantidadeNoEstoque.Name = "lblQuantidadeNoEstoque";
             this.lblQuantidadeNoEstoque.Size = new System.Drawing.Size(46, 13);
             this.lblQuantidadeNoEstoque.TabIndex = 7;
             this.lblQuantidadeNoEstoque.Text = "Estoque";
+            // 
+            // btnGerarRelatorio
+            // 
+            this.btnGerarRelatorio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGerarRelatorio.Location = new System.Drawing.Point(353, 225);
+            this.btnGerarRelatorio.Name = "btnGerarRelatorio";
+            this.btnGerarRelatorio.Size = new System.Drawing.Size(97, 50);
+            this.btnGerarRelatorio.TabIndex = 25;
+            this.btnGerarRelatorio.Text = "Relatorio";
+            this.btnGerarRelatorio.UseVisualStyleBackColor = true;
+            this.btnGerarRelatorio.Click += new System.EventHandler(this.btnGerarRelatorio_Click);
             // 
             // frmCadastroDeProdutos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1080, 612);
+            this.Controls.Add(this.btnGerarRelatorio);
             this.Controls.Add(this.txtEstoque);
             this.Controls.Add(this.lblQuantidadeNoEstoque);
             this.Controls.Add(this.txtPreco);
@@ -190,5 +203,6 @@
         private System.Windows.Forms.Label lblPreco;
         private System.Windows.Forms.TextBox txtEstoque;
         private System.Windows.Forms.Label lblQuantidadeNoEstoque;
+        private System.Windows.Forms.Button btnGerarRelatorio;
     }
 }

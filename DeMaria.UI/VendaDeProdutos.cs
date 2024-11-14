@@ -239,8 +239,8 @@ namespace DeMaria.UI
                 {
                     dgvProdutosEscolhidos.AutoGenerateColumns = false;
 
-                    dgvProdutosEscolhidos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id", HeaderText = "Id", Visible = false });
-                    dgvProdutosEscolhidos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "IdItemVenda", HeaderText = "IdItemVenda", Visible = false });
+                    dgvProdutosEscolhidos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id", HeaderText = "Id"}); 
+                    dgvProdutosEscolhidos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "IdItemVenda", HeaderText = "IdItemVenda"});
                     dgvProdutosEscolhidos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Nome", HeaderText = "Nome" });
                     dgvProdutosEscolhidos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Preco", HeaderText = "Preco" });
                     dgvProdutosEscolhidos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Estoque", HeaderText = "Quantidade" });
@@ -320,7 +320,7 @@ namespace DeMaria.UI
                         ItemVenda itemVenda = new ItemVenda
                         {
                             IdProduto = Convert.ToInt32(linha.Cells[0].Value),
-                            IdItemVenda = 0,
+                            IdItemVenda = Convert.ToInt32(linha.Cells[1].Value),
                             Quantidade = Convert.ToInt32(linha.Cells[4].Value)
                         };
 
@@ -377,7 +377,6 @@ namespace DeMaria.UI
                     {
                         //Adiciona o id para a remoção
                         idProduto = Convert.ToInt32(linha.Cells[0].Value);
-
                         //Remove o produto
                         produtosParaRemover.Add(idProduto);
                     }

@@ -115,3 +115,4 @@ C:\DevMilton\TesteMD\DeMaria.UI\bin\Debug\zh-CHS\Microsoft.ReportViewer.WinForms
 C:\DevMilton\TesteMD\DeMaria.UI\bin\Debug\zh-CHT\Microsoft.ReportViewer.WinForms.resources.dll
 C:\DevMilton\TesteMD\DeMaria.UI\obj\Debug\RdlCompile.cache
 C:\DevMilton\TesteMD\DeMaria.UI\obj\Debug\RdlCompile.compiled
+C:\DevMilton\TesteMD\DeMaria.UI\obj\Debug\DeMaria.UI.frmRelatorio.resources

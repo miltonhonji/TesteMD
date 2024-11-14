@@ -27,10 +27,10 @@ namespace DeMaria.UI
         {
             InitializeComponent();
             idCliente = clienteId;
-            CarregarDados();
+            ObterDados();
         }
 
-        private void CarregarDados()
+        private void ObterDados()
         {
             //Instâncias das classes de cliente e dto.cliente
             ClienteRepository clienteRepository = new ClienteRepository();
@@ -47,6 +47,7 @@ namespace DeMaria.UI
                     txtBairro.Text = cliente.Bairro;
                     mskCep.Text = cliente.Cep;
                     mskTelefone.Text = cliente.Telefone;
+                    txtEmail.Text = cliente.Email;
                 }
                 else
                 {
@@ -181,6 +182,25 @@ namespace DeMaria.UI
         private void btnSair_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnGerarRelatorio_Click(object sender, EventArgs e)
+        {
+            GerarRelatorioCliente();
+        }
+
+        private void GerarRelatorioCliente()
+        {
+            //Verifica se o Id do Cliente foi definido
+            if(idCliente > 0)
+            {
+                frmRelatorio relatorioCliente = new frmRelatorio(idCliente);
+                relatorioCliente.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Não foi salvo o cliente antes de gerar um relatório", "De Maria", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

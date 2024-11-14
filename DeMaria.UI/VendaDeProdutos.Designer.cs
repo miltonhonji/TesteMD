@@ -46,7 +46,6 @@
             this.grpProduto = new System.Windows.Forms.GroupBox();
             this.btnSelecionar = new System.Windows.Forms.Button();
             this.dgvListaDeProdutos = new System.Windows.Forms.DataGridView();
-            this.txtNomeDoProduto = new System.Windows.Forms.TextBox();
             this.lblNomeDoProduto = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnRetirarProduto = new System.Windows.Forms.Button();
@@ -209,18 +208,17 @@
             // 
             this.grpProduto.Controls.Add(this.btnSelecionar);
             this.grpProduto.Controls.Add(this.dgvListaDeProdutos);
-            this.grpProduto.Controls.Add(this.txtNomeDoProduto);
             this.grpProduto.Controls.Add(this.lblNomeDoProduto);
             this.grpProduto.Location = new System.Drawing.Point(12, 200);
             this.grpProduto.Name = "grpProduto";
-            this.grpProduto.Size = new System.Drawing.Size(513, 250);
+            this.grpProduto.Size = new System.Drawing.Size(513, 234);
             this.grpProduto.TabIndex = 15;
             this.grpProduto.TabStop = false;
             this.grpProduto.Text = "Informações do Produto";
             // 
             // btnSelecionar
             // 
-            this.btnSelecionar.Location = new System.Drawing.Point(402, 211);
+            this.btnSelecionar.Location = new System.Drawing.Point(402, 190);
             this.btnSelecionar.Name = "btnSelecionar";
             this.btnSelecionar.Size = new System.Drawing.Size(96, 33);
             this.btnSelecionar.TabIndex = 12;
@@ -231,17 +229,10 @@
             // dgvListaDeProdutos
             // 
             this.dgvListaDeProdutos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvListaDeProdutos.Location = new System.Drawing.Point(15, 58);
+            this.dgvListaDeProdutos.Location = new System.Drawing.Point(15, 38);
             this.dgvListaDeProdutos.Name = "dgvListaDeProdutos";
             this.dgvListaDeProdutos.Size = new System.Drawing.Size(483, 146);
             this.dgvListaDeProdutos.TabIndex = 11;
-            // 
-            // txtNomeDoProduto
-            // 
-            this.txtNomeDoProduto.Location = new System.Drawing.Point(15, 33);
-            this.txtNomeDoProduto.Name = "txtNomeDoProduto";
-            this.txtNomeDoProduto.Size = new System.Drawing.Size(483, 20);
-            this.txtNomeDoProduto.TabIndex = 2;
             // 
             // lblNomeDoProduto
             // 
@@ -256,12 +247,12 @@
             // 
             this.groupBox1.Controls.Add(this.btnRetirarProduto);
             this.groupBox1.Controls.Add(this.dgvProdutosEscolhidos);
-            this.groupBox1.Location = new System.Drawing.Point(12, 455);
+            this.groupBox1.Location = new System.Drawing.Point(12, 437);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(513, 213);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Informações do Produto";
+            this.groupBox1.Text = "1";
             // 
             // btnRetirarProduto
             // 
@@ -284,7 +275,7 @@
             // dtpDataDeVenda
             // 
             this.dtpDataDeVenda.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpDataDeVenda.Location = new System.Drawing.Point(102, 674);
+            this.dtpDataDeVenda.Location = new System.Drawing.Point(102, 660);
             this.dtpDataDeVenda.Name = "dtpDataDeVenda";
             this.dtpDataDeVenda.Size = new System.Drawing.Size(96, 20);
             this.dtpDataDeVenda.TabIndex = 17;
@@ -292,7 +283,7 @@
             // lblDataDeVenda
             // 
             this.lblDataDeVenda.AutoSize = true;
-            this.lblDataDeVenda.Location = new System.Drawing.Point(14, 677);
+            this.lblDataDeVenda.Location = new System.Drawing.Point(14, 663);
             this.lblDataDeVenda.Name = "lblDataDeVenda";
             this.lblDataDeVenda.Size = new System.Drawing.Size(82, 13);
             this.lblDataDeVenda.TabIndex = 14;
@@ -300,7 +291,7 @@
             // 
             // txtValorTotal
             // 
-            this.txtValorTotal.Location = new System.Drawing.Point(429, 698);
+            this.txtValorTotal.Location = new System.Drawing.Point(429, 684);
             this.txtValorTotal.Name = "txtValorTotal";
             this.txtValorTotal.Size = new System.Drawing.Size(96, 20);
             this.txtValorTotal.TabIndex = 13;
@@ -308,7 +299,7 @@
             // lblValorTotal
             // 
             this.lblValorTotal.AutoSize = true;
-            this.lblValorTotal.Location = new System.Drawing.Point(362, 702);
+            this.lblValorTotal.Location = new System.Drawing.Point(362, 688);
             this.lblValorTotal.Name = "lblValorTotal";
             this.lblValorTotal.Size = new System.Drawing.Size(61, 13);
             this.lblValorTotal.TabIndex = 12;
@@ -317,7 +308,7 @@
             // lblQuantidadeItens
             // 
             this.lblQuantidadeItens.AutoSize = true;
-            this.lblQuantidadeItens.Location = new System.Drawing.Point(333, 677);
+            this.lblQuantidadeItens.Location = new System.Drawing.Point(333, 663);
             this.lblQuantidadeItens.Name = "lblQuantidadeItens";
             this.lblQuantidadeItens.Size = new System.Drawing.Size(90, 13);
             this.lblQuantidadeItens.TabIndex = 18;
@@ -325,14 +316,14 @@
             // 
             // txtQuantidadeItens
             // 
-            this.txtQuantidadeItens.Location = new System.Drawing.Point(429, 674);
+            this.txtQuantidadeItens.Location = new System.Drawing.Point(429, 660);
             this.txtQuantidadeItens.Name = "txtQuantidadeItens";
             this.txtQuantidadeItens.Size = new System.Drawing.Size(96, 20);
             this.txtQuantidadeItens.TabIndex = 19;
             // 
             // btnNovo
             // 
-            this.btnNovo.Location = new System.Drawing.Point(17, 735);
+            this.btnNovo.Location = new System.Drawing.Point(17, 721);
             this.btnNovo.Name = "btnNovo";
             this.btnNovo.Size = new System.Drawing.Size(96, 33);
             this.btnNovo.TabIndex = 14;
@@ -342,7 +333,7 @@
             // 
             // btnGravar
             // 
-            this.btnGravar.Location = new System.Drawing.Point(195, 735);
+            this.btnGravar.Location = new System.Drawing.Point(195, 721);
             this.btnGravar.Name = "btnGravar";
             this.btnGravar.Size = new System.Drawing.Size(96, 33);
             this.btnGravar.TabIndex = 20;
@@ -352,7 +343,7 @@
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(429, 735);
+            this.btnSair.Location = new System.Drawing.Point(429, 721);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(96, 33);
             this.btnSair.TabIndex = 21;
@@ -411,7 +402,6 @@
         private System.Windows.Forms.Label lblComplemento;
         private System.Windows.Forms.TextBox txtComplemento;
         private System.Windows.Forms.GroupBox grpProduto;
-        private System.Windows.Forms.TextBox txtNomeDoProduto;
         private System.Windows.Forms.Label lblNomeDoProduto;
         private System.Windows.Forms.DataGridView dgvListaDeProdutos;
         private System.Windows.Forms.GroupBox groupBox1;
